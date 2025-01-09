@@ -15,21 +15,8 @@ class I2CCubit extends Cubit<I2CState> {
   }
 
   void _initialize() {
-    // debugPrint('In _initialize () method');
     i2cService.initializeBme280();
-    // Start polling or other initialization tasks
   }
-
-  // void readSensorData() async {
-  //   final data = await i2cService.readSensorData();
-  //   emit(state.copyWith(
-  //     temperature: data['temperature'],
-  //     humidity: data['humidity'],
-  //     pressure: data['pressure'],
-  //   ));
-  //   debugPrint('in cubit Temperature data: ${data['temperature']}');
-    
-  // }
 
   void startPolling() {
     debugPrint('In cubit startPolling () method');
@@ -39,23 +26,7 @@ class I2CCubit extends Cubit<I2CState> {
         humidity: data['humidity'],
         pressure: data['pressure'],
       ));
-      heaterPwmService.updateTemperature(data['temperature']!);
+      // heaterPwmService.updateTemperature(data['temperature']!);
     });
   }
-
-  void stopPolling() {
-    i2cService.stopPolling();
-  }
-
-  // void setPollingInterval(Duration interval) {
-  //   i2cService.setPollingInterval(interval);
-  // }
-
-  @override
-  Future<void> close() {
-    i2cService.dispose();
-    return super.close();
-  }
-
-  // String get currentTemperature => state.temperature;
 }
