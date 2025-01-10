@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:dart_periphery/dart_periphery.dart';
 import 'package:flutter/foundation.dart';
 
@@ -23,32 +24,34 @@ class I2CService {
     _pollingTimer.cancel();
   }
 
-  Future<Map<String, String>> readSensorData() async {
+  Future<Map<String, double>> readSensorData() async {
     if (!_isInitialized) {
       throw Exception('BME280 not initialized. Call initializeBme280() first.');
     }
-    dynamic getBme280Data;
+    // ignore: prefer_typing_uninitialized_variables
+    var getBme280Data;
     try {
       getBme280Data = bme280.getValues();
     } catch (e) {
       debugPrint('Error reading sensor data: $e');
       return {
-        'temperature': 'N/A',
-        'humidity': 'N/A',
-        'pressure': 'N/A',
+        'temperature': 0.0,
+        'humidity': 0.0,
+        'pressure': 0.0,
       };
     }
-    final temperature = getBme280Data.temperature.toStringAsFixed(1);
-    final humidity = getBme280Data.humidity.toStringAsFixed(1);
-    final pressure = getBme280Data.pressure.toStringAsFixed(1);
+    final temperatureResults = getBme280Data.temperature.toDouble();
+    final humidityResults = getBme280Data.humidity.toDouble();
+    final pressureResults = getBme280Data.pressure.toDouble();
+    
     return {
-      'temperature': temperature,
-      'humidity': humidity,
-      'pressure': pressure,
+      'temperature': temperatureResults,
+      'humidity': humidityResults,
+      'pressure': pressureResults,
     };
   }
 
-  void startPolling(Function(Map<String, String>) onData) {
+  void startPolling(Function(Map<String, double>) onData) {
     _pollingTimer = Timer.periodic(pollingInterval, (_) async {
       try {
         final data = await readSensorData();

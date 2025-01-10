@@ -1,3 +1,4 @@
+import 'package:bme_i2c/blocs/pid/heater_pid.dart';
 import 'package:bme_i2c/blocs/services/heater_pwm_service.dart';
 import 'package:bme_i2c/blocs/services/i2c_service.dart';
 import 'package:flutter/foundation.dart';
@@ -6,11 +7,11 @@ import 'i2c_state.dart';
 
 class I2CCubit extends Cubit<I2CState> {
   final I2CService i2cService = I2CService();
+  final HeaterPid heaterPid = HeaterPid();
   final HeaterPwmService heaterPwmService = HeaterPwmService();
 
   I2CCubit()
-      : super(const I2CState(
-            temperature: '0.0', humidity: '0.0', pressure: '0.0')) {
+      : super(const I2CState(temperature: 0.0, humidity: 0.0, pressure: 0.0)) {
     _initialize();
   }
 
@@ -20,13 +21,16 @@ class I2CCubit extends Cubit<I2CState> {
 
   void startPolling() {
     debugPrint('In cubit startPolling () method');
+
     i2cService.startPolling((data) {
       emit(state.copyWith(
         temperature: data['temperature'],
         humidity: data['humidity'],
         pressure: data['pressure'],
       ));
-      // heaterPwmService.updateTemperature(data['temperature']!);
+      heaterPid.updateValues(
+          setpoint: 25.0, currentTemperature: data['temperature']!);
+      heaterPwmService.updateTemperature(data['temperature']!);
     });
   }
 }

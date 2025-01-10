@@ -3,22 +3,20 @@ import 'package:flutter/foundation.dart';
 
 class HeaterPwmService {
   PWM pwm = PWM(0, 0);
-  int setPwmPeriod = 10000000;
-  int setPwmDutyCycle = 8000000;
+  // 1000000 ns = 1 ms = 1000 Hz
+  int setPwmPeriod = 10000000; //100 Hz frequency
+  double setTemperature = 0.0;
+  
 
-  void updateTemperature(String temperatureString) {
-    debugPrint(' in heater_pwm_service Temperature string: $temperatureString');
-    // try {
-    //   int temperature = int.parse(temperatureString);
-    //   debugPrint('Temperature: $temperature');
-    //   // Use the temperature value to control the PWM signal
-    // } catch (e) {
-    //   debugPrint('Error: $e');
-    // }
+
+  void updateTemperature(double temperatureHeaterPwm) {
+    setTemperature = 50.0;
+    debugPrint(
+        ' in heater_pwm_service Temperature string: ${temperatureHeaterPwm.toStringAsFixed(2)}');
+        
   }
 
-
-  void setPwm(setPwmPeriod, setPwmDutyCycle) {
+  void setPwm(int setPwmDutyCycle) {
     try {
       pwm.setPeriodNs(setPwmPeriod);
       pwm.setDutyCycleNs(setPwmDutyCycle);

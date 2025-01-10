@@ -1,7 +1,7 @@
 class I2CState {
-  final String temperature;
-  final String humidity;
-  final String pressure;
+  final double temperature;
+  final double humidity;
+  final double pressure;
 
   const I2CState({
     required this.temperature,
@@ -10,9 +10,9 @@ class I2CState {
   });
 
   I2CState copyWith({
-    String? temperature,
-    String? humidity,
-    String? pressure,
+    double? temperature,
+    double? humidity,
+    double? pressure,
   }) {
     return I2CState(
       temperature: temperature ?? this.temperature,
