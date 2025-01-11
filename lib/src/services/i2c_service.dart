@@ -13,10 +13,11 @@ class I2CService {
 
   void initializeBme280() {
     try {
-      debugPrint('I2C info: ${i2c.getI2Cinfo()}');
+      // debugPrint('I2C info: ${i2c.getI2Cinfo()}');
       bme280 = BME280(i2c);
       _isInitialized = true;
     } catch (e) {
+      disposeI2c();
       debugPrint('Error initializing I2C device: $e');
     }
   }
@@ -34,7 +35,8 @@ class I2CService {
     try {
       getBme280Data = bme280.getValues();
     } catch (e) {
-      debugPrint('Error reading sensor data: $e');
+      // debugPrint('Error reading sensor data: $e');
+      disposeI2c();
       return {
         'temperature': 0.0,
         'humidity': 0.0,
@@ -58,21 +60,15 @@ class I2CService {
         final data = await readSensorData();
         onData(data);
       } catch (e) {
-        debugPrint('Error polling I2C device: $e');
+        // debugPrint('Error polling I2C device: $e');
+        disposeI2c();
       }
     });
   }
 
-  void dispose() {
+  void disposeI2c() {
     stopPolling();
     i2c.dispose();
   }
 
-  // void setPollingInterval(Duration interval) {
-  //   pollingInterval = interval;
-  //   if (_pollingTimer.isActive) {
-  //     stopPolling();
-  //     startPolling((_) {});
-  //   }
-  // }
 }

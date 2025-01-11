@@ -20,7 +20,7 @@ class I2CCubit extends Cubit<I2CState> {
   }
 
   void startPolling() {
-    debugPrint('In cubit startPolling () method');
+    // debugPrint('In cubit startPolling () method');
 
     i2cService.startPolling((data) {
       emit(state.copyWith(
@@ -28,8 +28,8 @@ class I2CCubit extends Cubit<I2CState> {
         humidity: data['humidity'],
         pressure: data['pressure'],
       ));
-      heaterService.heaterServiceUpdateValues(
-      setpoint: 25.0, currentTemperature: data['temperature']!);
+      heaterService.updateTemperature(
+      currentTemperature: data['temperature']!);
       // heaterPwmService.updateTemperature(data['temperature']!);
     });
   }

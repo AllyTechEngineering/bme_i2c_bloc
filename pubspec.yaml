@@ -37,6 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.6
   dart_periphery: ^0.9.6
   flutter_bloc: ^8.1.6
+  equatable: ^2.0.3
+  meta: ^1.7.0
+  bloc: ^8.1.4
 
 dev_dependencies:
   flutter_test:
