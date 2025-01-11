@@ -1,4 +1,4 @@
-import 'package:bme_i2c/blocs/widgets/data_container.dart';
+import 'package:bme_i2c/src/widgets/data_container.dart';
 import 'package:flutter/material.dart';
 
 class DataDisplay extends StatelessWidget {

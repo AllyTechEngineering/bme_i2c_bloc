@@ -4,9 +4,10 @@ import 'package:dart_periphery/dart_periphery.dart';
 import 'package:flutter/foundation.dart';
 
 class I2CService {
-  final I2C i2c = I2C(1);
+  var i2c = I2C(1);
   Duration pollingInterval = const Duration(seconds: 1);
   late Timer _pollingTimer;
+  // ignore: prefer_typing_uninitialized_variables
   late final BME280 bme280;
   bool _isInitialized = false;
 
@@ -43,7 +44,7 @@ class I2CService {
     final temperatureResults = getBme280Data.temperature.toDouble();
     final humidityResults = getBme280Data.humidity.toDouble();
     final pressureResults = getBme280Data.pressure.toDouble();
-    
+
     return {
       'temperature': temperatureResults,
       'humidity': humidityResults,

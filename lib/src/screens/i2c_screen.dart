@@ -1,8 +1,8 @@
-import 'package:bme_i2c/blocs/widgets/data_display.dart';
+import 'package:bme_i2c/src/widgets/data_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bme_i2c/blocs/i2c/i2c_cubit.dart';
-import 'package:bme_i2c/blocs/i2c/i2c_state.dart';
+import 'package:bme_i2c/src/i2c/i2c_cubit.dart';
+import 'package:bme_i2c/src/i2c/i2c_state.dart';
 
 class I2CScreen extends StatelessWidget {
   const I2CScreen({super.key});

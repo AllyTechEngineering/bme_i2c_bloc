@@ -1,4 +1,4 @@
-import 'package:bme_i2c/blocs/screens/i2c_screen.dart';
+import 'package:bme_i2c/src/screens/i2c_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
