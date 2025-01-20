@@ -5,7 +5,7 @@ import 'package:bme_i2c/src/i2c_bme280_cubit/i2c_cubit.dart';
 import 'package:bme_i2c/src/i2c_bme280_cubit/i2c_state.dart';
 import 'package:bme_i2c/src/heater_setpoint_cubit/heater_setpoint_cubit.dart';
 import 'package:bme_i2c/src/heater_setpoint_cubit/heater_setpoint_state.dart';
-import 'package:bme_i2c/src/services/heater_service.dart';
+// import 'package:bme_i2c/src/services/heater_service.dart';
 import 'package:bme_i2c/src/widgets/heater_setpoint.dart';
 
 class I2CScreen extends StatelessWidget {
@@ -13,6 +13,7 @@ class I2CScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: no_leading_underscores_for_local_identifiers
     final TextEditingController _controller = TextEditingController();
 
     return Scaffold(

@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 
 class HeaterService {
   static const double kp = 2.0; // Proportional gain (best guess)
-  static const double ki = 0.0; // Integral gain (best guess)
+  static const double ki = 0.1; // Integral gain (best guess)
   static const double kd = 1.0; // Derivative gain (best guess)
 
   double _previousError = 0.0;
@@ -20,76 +20,81 @@ class HeaterService {
 
   void initializeHeaterService() {
     try {
-      // debugPrint('First try catch, pwm = PWM(0, 0);');
+      debugPrint('First try catch, pwm = PWM(0, 0);');
       pwm = PWM(0, 0);
-      // debugPrint('PWM Infor: ${pwm.getPWMinfo()}');
+      debugPrint('PWM Infor: ${pwm.getPWMinfo()}');
     } catch (e) {
-      disablePwm();
-      disposePwm();
+      pwm.disable();
+      pwm.dispose();
       debugPrint('pwm = PWM(0, 0); Error: $e');
     }
     try {
-      // debugPrint('Second try catch, pwm.setPeriodNs(10000000);');
+      debugPrint('Second try catch, pwm.setPeriodNs(10000000);');
       pwm.setPeriodNs(10000000);
-      // debugPrint('PWM Infor: ${pwm.getPWMinfo()}');
+      debugPrint('PWM Infor: ${pwm.getPWMinfo()}');
     } catch (e) {
-      disablePwm();
-      disposePwm();
+      pwm.disable();
+      pwm.dispose();
       debugPrint('pwm.setPeriodNs(10000000) Error: $e');
     }
     try {
-      // debugPrint('Third try catch, pwm.setDutyCycleNs(5000000);');
+      debugPrint('Third try catch, pwm.setDutyCycleNs(5000000);');
       pwm.setDutyCycleNs(0);
-      // debugPrint('PWM Infor: ${pwm.getPWMinfo()}');
+      debugPrint('PWM Infor: ${pwm.getPWMinfo()}');
     } catch (e) {
-      disablePwm();
-      disposePwm();
+      pwm.disable();
+      pwm.dispose();
       debugPrint('pwm.setDutyCycleNs(5000000) Error: $e');
     }
-        try {
-      // debugPrint('Fourth try catch, pwm.enable();');
+    try {
+      debugPrint('Fourth try catch, pwm.enable();');
       pwm.enable();
-      // debugPrint('PWM Infor: ${pwm.getPWMinfo()}');
+      debugPrint('PWM Infor: ${pwm.getPWMinfo()}');
     } catch (e) {
-      disablePwm();
-      disposePwm();
+      pwm.disable();
+      pwm.dispose();
       debugPrint('pwm.enable() Error: $e');
     }
   }
 
-  void disablePwm() {
-    pwm.disable();
+  // void disablePwm() {
+  //   pwm.disable();
+  // }
+
+  // void disposePwm() {
+  //   pwm.dispose();
+  // }
+
+  void updatePwmDutyCycle() {
+    pwm.setDutyCycleNs(computePidDutyCycle().toInt());
+    debugPrint('In updatePwmDutyCycle PWM Infor: ${pwm.getPWMinfo()}');
   }
 
-  void disposePwm() {
-    pwm.dispose();
-  }
   void updateSetpoint(double setpoint) {
     _setpoint = setpoint;
-    debugPrint('in HeaterService class: Heater setpoint updated to: $_setpoint');
+    debugPrint(
+        'in HeaterService class: Heater setpoint updated to: $_setpoint');
   }
 
-
-  void updateTemperature(
-      { required double currentTemperature}) {
+  void updateTemperature({required double currentTemperature}) {
     _currentTemperature = currentTemperature;
-
-    var temp = heaterServiceComputeDutyCycle();
-    debugPrint('heaterServiceComputeDutyCycled duty cycle: $temp');
+    updatePwmDutyCycle();
+    debugPrint(
+        'in HeaterService class: Current temperature updated to: $_currentTemperature');
   }
 
-  /// heaterServiceComputeDutyCycle the duty cycle based on the current temperature and setpoint
-  double heaterServiceComputeDutyCycle() {
-    debugPrint('In heaterServiceComputeDutyCycle and the setpoint is: $_setpoint, and the current temperature is: $_currentTemperature');
+  double computePidDutyCycle() {
+    debugPrint(
+        'In computePidDutyCycle and the setpoint is: $_setpoint, and the current temperature is: $_currentTemperature');
     if (_setpoint == null || _currentTemperature == null) {
       throw Exception(
-          'Setpoint and current temperature must be set before calling heaterServiceComputeDutyCycle.');
+          'Setpoint and current temperature must be set before calling computePidDutyCycle.');
     }
 
     // Calculate deltaTime
     DateTime now = DateTime.now();
     double deltaTime = _previousTime != null
-        ? now.difference(_previousTime!).inMilliseconds / 1000.0
+        ? now.difference(_previousTime!).inMilliseconds / 500.0
         : 1.0; // Default to 1 second for the first iteration
     _previousTime = now;
 
@@ -123,6 +128,7 @@ class HeaterService {
 
     // Clamp the dutyCycleComputed to 0-100
     dutyCycleComputed = dutyCycleComputed.clamp(0.0, 100.0);
+    dutyCycleComputed = dutyCycleComputed * 100000;
     debugPrint('Clamped Dutycycle (0-100): $dutyCycleComputed');
 
     return dutyCycleComputed;

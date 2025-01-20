@@ -1,6 +1,6 @@
 import 'package:bme_i2c/src/services/heater_service.dart';
 import 'package:bme_i2c/src/services/i2c_service.dart';
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'i2c_state.dart';
 
