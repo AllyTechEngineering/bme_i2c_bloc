@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:bme_i2c/src/humidity_setpoint_cubit/humidity_setpoint_state.dart';
-import 'package:bme_i2c/src/services/humidifier_service.dart';
+import 'package:bme_i2c/src/services/humidifier_service_pid.dart';
 
 import 'package:flutter/foundation.dart';
 

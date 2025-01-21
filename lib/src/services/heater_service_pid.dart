@@ -1,10 +1,10 @@
 import 'package:dart_periphery/dart_periphery.dart';
-// import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 
 class HeaterService {
   static const double kp = 2.0; // Proportional gain (best guess)
   static const double ki = 0.1; // Integral gain (best guess)
-  static const double kd = 1.0; // Derivative gain (best guess)
+  static const double kd = 0.5; // Derivative gain (best guess)
 
   double _previousError = 0.0;
   double _integral = 0.0;
@@ -22,6 +22,7 @@ class HeaterService {
     try {
       // debugPrint('First try catch, pwm = PWM(0, 0);');
       pwm = PWM(0, 0);
+      // pwm.setPolarity(Polarity.pwmPolarityInversed);
       // debugPrint('PWM Infor: ${pwm.getPWMinfo()}');
     } catch (e) {
       pwm.disable();
@@ -54,6 +55,15 @@ class HeaterService {
       pwm.disable();
       pwm.dispose();
       // debugPrint('pwm.enable() Error: $e');
+    }
+    try {
+      debugPrint('Fifth try catch, Polarity.pwmPolarityNormal');
+      pwm.setPolarity(Polarity.pwmPolarityNormal);
+      debugPrint('Temperture PWM Infor: ${pwm.getPWMinfo()}');
+    } catch (e) {
+      pwm.disable();
+      pwm.dispose();
+      debugPrint('Polarity.pwmPolarityNormal Error: $e');
     }
   }
 
@@ -110,10 +120,6 @@ class HeaterService {
     double proportional = kp * error;
     // debugPrint('Proportional: $proportional');
 
-    // Integral term
-    // _integral += error * deltaTime;
-    // double integral = ki * _integral;
-    // debugPrint('Integral: $integral');
     // Integral term with clamping for windup prevention
     _integral += error * deltaTime;
     const double maxIntegral = 100.0 / ki; // Adjust as necessary
@@ -130,12 +136,15 @@ class HeaterService {
 
     // Calculate the dutyCycleComputed (duty cycle)
     double dutyCycleComputed = proportional + integral + derivative;
-    // debugPrint('Raw Dutycycle: $dutyCycleComputed');
+    debugPrint('Temperature Propotional: $proportional');
+    debugPrint('Temperature Integral: $integral');
+    debugPrint('Temperature Derivative: $derivative');
+    debugPrint('Raw Temperature Dutycycle: $dutyCycleComputed');
 
     // Clamp the dutyCycleComputed to 0-100
     dutyCycleComputed = dutyCycleComputed.clamp(0.0, 100.0);
     dutyCycleComputed = dutyCycleComputed * 100000;
-    // debugPrint('Clamped Dutycycle (0-100): $dutyCycleComputed');
+    debugPrint('Clamped Temperature Dutycycle (0-100): $dutyCycleComputed');
 
     return dutyCycleComputed;
   }
