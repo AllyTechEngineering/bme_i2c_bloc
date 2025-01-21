@@ -40,7 +40,7 @@ class I2CScreen extends StatelessWidget {
           heaterSetpointElevatedButton(_setpointTempcontroller, context),
           heaterSetpointBlocBuilder(),
           HumiditySetpoint(setpointHumiditycontroller: _setpointHumiditycontroller),
-          humiditySetpointElevatedButton(_setpointTempcontroller, context),
+          humiditySetpointElevatedButton(_setpointHumiditycontroller, context),
           humiditySetpointBlocBuilder(),
         ],
       ),
@@ -76,11 +76,11 @@ class I2CScreen extends StatelessWidget {
   }
 
     // ignore: no_leading_underscores_for_local_identifiers
-  HumiditySetpointButton humiditySetpointElevatedButton(TextEditingController _setpointTempcontroller, BuildContext context) {
+  HumiditySetpointButton humiditySetpointElevatedButton(TextEditingController _setpointHumiditycontroller, BuildContext context) {
     return HumiditySetpointButton(
           onPressed: () {
             final double? setpoint =
-                double.tryParse(_setpointTempcontroller.text);
+                double.tryParse(_setpointHumiditycontroller.text);
             if (setpoint != null) {
               context
                   .read<HumiditySetpointCubit>()
@@ -150,7 +150,7 @@ class HumiditySetpoint extends StatelessWidget {
           controller: _setpointHumiditycontroller,
           keyboardType: TextInputType.number,
           decoration: const InputDecoration(
-            labelText: 'Humidifier % Setpoint',
+            labelText: 'Humidifier %Setpoint',
             border: OutlineInputBorder(),
           ),
         ),

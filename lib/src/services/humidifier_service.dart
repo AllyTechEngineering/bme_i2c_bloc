@@ -18,7 +18,7 @@ class HumidifierService {
 
   int setPwmPeriod = 10000000; //10000000ns = 100Hz freq, 1000000ns = 1000 Hz
 
-  void initializeHeaterService() {
+  void initializeHumidifierService() {
     try {
       debugPrint('Humidity First try catch, pwm = PWM(0, 0);');
       pwm = PWM(0, 1);
@@ -80,7 +80,7 @@ class HumidifierService {
     _currentHumidity = currentHumidity ;
     updatePwmDutyCycle();
     debugPrint(
-        'in HumidifierService class: Current temperature updated to: $_currentHumidity ');
+        'in HumidifierService class: Current humidity updated to: $_currentHumidity ');
   }
 
   double computePidDutyCycle() {
@@ -111,7 +111,14 @@ class HumidifierService {
     debugPrint('Humidity Proportional: $proportional');
 
     // Integral term
+    // _integral += error * deltaTime;
+    // double integral = ki * _integral;
+
+        // Integral term with clamping for windup prevention
     _integral += error * deltaTime;
+    const double maxIntegral = 100.0 / ki; // Adjust as necessary
+    const double minIntegral = -1.0;
+    _integral = _integral.clamp(minIntegral, maxIntegral);
     double integral = ki * _integral;
     debugPrint('Humidity Integral: $integral');
 
