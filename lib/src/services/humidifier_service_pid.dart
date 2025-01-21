@@ -1,5 +1,5 @@
 import 'package:dart_periphery/dart_periphery.dart';
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 
 class HumidifierService {
   static const double kp = 2.0; // Proportional gain (best guess)
@@ -30,7 +30,7 @@ class HumidifierService {
       // debugPrint('Humidity pwm = PWM(0, 0); Error: $e');
     }
     try {
-      debugPrint('Humidity Second try catch, pwm.setPeriodNs(10000000);');
+      // debugPrint('Humidity Second try catch, pwm.setPeriodNs(10000000);');
       pwm.setPeriodNs(10000000);
       // debugPrint('Humidity PWM Infor: ${pwm.getPWMinfo()}');
     } catch (e) {
@@ -57,13 +57,13 @@ class HumidifierService {
       // debugPrint('Humidity pwm.enable() Error: $e');
     }
     try {
-      debugPrint('Fifth try catch, Polarity.pwmPolarityNormal');
+      // debugPrint('Fifth try catch, Polarity.pwmPolarityNormal');
       pwm.setPolarity(Polarity.pwmPolarityNormal);
-      debugPrint('Humidifier PWM Infor: ${pwm.getPWMinfo()}');
+      // debugPrint('Humidifier PWM Infor: ${pwm.getPWMinfo()}');
     } catch (e) {
       pwm.disable();
       pwm.dispose();
-      debugPrint('Polarity.pwmPolarityNormal Error: $e');
+      // debugPrint('Polarity.pwmPolarityNormal Error: $e');
     }
   }
 
@@ -141,16 +141,16 @@ class HumidifierService {
 
     // Calculate the humidityDutycycleComputed (duty cycle)
     double humidityDutycycleComputed = proportional + integral + derivative;
-    debugPrint('Humidifier Propotional: $proportional');
-    debugPrint('Humidifier Integral: $integral');
-    debugPrint('Humidifier Derivative: $derivative');
-    debugPrint('Raw Humidity Dutycycle: $humidityDutycycleComputed');
+    // debugPrint('Humidifier Propotional: $proportional');
+    // debugPrint('Humidifier Integral: $integral');
+    // debugPrint('Humidifier Derivative: $derivative');
+    // debugPrint('Raw Humidity Dutycycle: $humidityDutycycleComputed');
 
     // Clamp the humidityDutycycleComputed to 0-100
     humidityDutycycleComputed = humidityDutycycleComputed.clamp(0.0, 100.0);
     humidityDutycycleComputed = humidityDutycycleComputed * 100000;
-    debugPrint(
-        'Humidity Clamped Dutycycle (0-100): $humidityDutycycleComputed');
+    // debugPrint(
+    //     'Humidity Clamped Dutycycle (0-100): $humidityDutycycleComputed');
 
     return humidityDutycycleComputed;
   }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bme_i2c/src/screens/i2c_screen.dart';
 import 'package:bme_i2c/src/i2c_bme280_cubit/i2c_cubit.dart';
-import 'package:bme_i2c/src/services/heater_service_pid.dart';
+import 'package:bme_i2c/src/services/heater_service.dart';
 import 'package:bme_i2c/src/heater_setpoint_cubit/heater_setpoint_cubit.dart';
 
 void main() {
