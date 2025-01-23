@@ -1,5 +1,8 @@
+import 'package:bme_i2c/src/bloc/system_on_off_cubit/system_on_off_cubit_button.dart';
 import 'package:bme_i2c/src/humidity_setpoint_cubit/humidity_setpoint_cubit.dart';
-import 'package:bme_i2c/src/services/humidifier_service_pid.dart';
+import 'package:bme_i2c/src/services/heater_service_pid.dart';
+import 'package:bme_i2c/src/services/humidifier_service.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bme_i2c/src/screens/i2c_screen.dart';
@@ -27,6 +30,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => HumiditySetpointCubit(HumidifierService()),
         ),  
+        BlocProvider(
+          create: (_) => SystemOnOffCubit(HeaterService(), HumidifierService(), HeaterServicePid()),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

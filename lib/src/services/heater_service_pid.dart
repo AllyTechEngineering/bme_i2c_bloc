@@ -1,7 +1,7 @@
 import 'package:dart_periphery/dart_periphery.dart';
 import 'package:flutter/foundation.dart';
 
-class HeaterService {
+class HeaterServicePid {
   static const double kp = 2.0; // Proportional gain (best guess)
   static const double ki = 0.1; // Integral gain (best guess)
   static const double kd = 0.5; // Derivative gain (best guess)
@@ -13,65 +13,60 @@ class HeaterService {
   static double? _currentTemperature;
   DateTime? _previousTime;
 
-  // ignore: prefer_typing_uninitialized_variables
-  var pwm = PWM(0, 0);
+  static PWM pwm = PWM(0, 0);
 
   int setPwmPeriod = 10000000; //10000000ns = 100Hz freq, 1000000ns = 1000 Hz
 
   void initializeHeaterService() {
     try {
       // debugPrint('First try catch, pwm = PWM(0, 0);');
-      pwm = PWM(0, 0);
+      // pwm = PWM(0, 0);
       // pwm.setPolarity(Polarity.pwmPolarityInversed);
-      // debugPrint('PWM Infor: ${pwm.getPWMinfo()}');
+      debugPrint('HeaterServicePid PWM Infor: ${pwm.getPWMinfo()}');
     } catch (e) {
-      pwm.disable();
-      pwm.dispose();
-      // debugPrint('pwm = PWM(0, 0); Error: $e');
+      debugPrint('pwm = PWM(0, 0); Error: $e');
     }
     try {
       // debugPrint('Second try catch, pwm.setPeriodNs(10000000);');
       pwm.setPeriodNs(10000000);
       // debugPrint('PWM Infor: ${pwm.getPWMinfo()}');
     } catch (e) {
-      pwm.disable();
-      pwm.dispose();
-      // debugPrint('pwm.setPeriodNs(10000000) Error: $e');
+      debugPrint('pwm.setPeriodNs(10000000) Error: $e');
     }
     try {
       // debugPrint('Third try catch, pwm.setDutyCycleNs(5000000);');
       pwm.setDutyCycleNs(0);
       // debugPrint('PWM Infor: ${pwm.getPWMinfo()}');
     } catch (e) {
-      pwm.disable();
-      pwm.dispose();
-      // debugPrint('pwm.setDutyCycleNs(5000000) Error: $e');
+      debugPrint('pwm.setDutyCycleNs(5000000) Error: $e');
     }
     try {
       // debugPrint('Fourth try catch, pwm.enable();');
       pwm.enable();
       // debugPrint('PWM Infor: ${pwm.getPWMinfo()}');
     } catch (e) {
-      pwm.disable();
-      pwm.dispose();
-      // debugPrint('pwm.enable() Error: $e');
+      debugPrint('pwm.enable() Error: $e');
     }
     try {
-      debugPrint('Fifth try catch, Polarity.pwmPolarityNormal');
+      // debugPrint('Fifth try catch, Polarity.pwmPolarityNormal');
       pwm.setPolarity(Polarity.pwmPolarityNormal);
-      debugPrint('Temperture PWM Infor: ${pwm.getPWMinfo()}');
+      // debugPrint('Temperture PWM Infor: ${pwm.getPWMinfo()}');
     } catch (e) {
-      pwm.disable();
-      pwm.dispose();
       debugPrint('Polarity.pwmPolarityNormal Error: $e');
     }
   }
 
-  void disablePwm() {
+  void disableHeaterPwmPid() {
     pwm.disable();
+    debugPrint('HeaterServicePid PWM Infor: ${pwm.getPWMinfo()}');
+  }
+  void enableHeaterPwmPid() {
+    pwm.enable();
+    debugPrint('HeaterServicePid PWM Infor: ${pwm.getPWMinfo()}');
   }
 
-  void disposePwm() {
+  void disposeHeaterPwmPid() {
+    debugPrint('In HeaterServicePid disposeHeaterPwmPid method');
     pwm.dispose();
   }
 
@@ -136,15 +131,15 @@ class HeaterService {
 
     // Calculate the dutyCycleComputed (duty cycle)
     double dutyCycleComputed = proportional + integral + derivative;
-    debugPrint('Temperature Propotional: $proportional');
-    debugPrint('Temperature Integral: $integral');
-    debugPrint('Temperature Derivative: $derivative');
-    debugPrint('Raw Temperature Dutycycle: $dutyCycleComputed');
+    // debugPrint('Temperature Propotional: $proportional');
+    // debugPrint('Temperature Integral: $integral');
+    // debugPrint('Temperature Derivative: $derivative');
+    // debugPrint('Raw Temperature Dutycycle: $dutyCycleComputed');
 
     // Clamp the dutyCycleComputed to 0-100
     dutyCycleComputed = dutyCycleComputed.clamp(0.0, 100.0);
     dutyCycleComputed = dutyCycleComputed * 100000;
-    debugPrint('Clamped Temperature Dutycycle (0-100): $dutyCycleComputed');
+    // debugPrint('Clamped Temperature Dutycycle (0-100): $dutyCycleComputed');
 
     return dutyCycleComputed;
   }

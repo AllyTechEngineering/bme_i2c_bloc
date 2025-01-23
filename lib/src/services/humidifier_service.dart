@@ -2,82 +2,76 @@ import 'package:dart_periphery/dart_periphery.dart';
 import 'package:flutter/foundation.dart';
 
 class HumidifierService {
-
+  final double hysteresis = 2.0;
+  final double onHysteresis = 2.0;
+  final double offHysteresis = 1.0;
+  bool _humidifierState = false;
+  bool _systemOnOffstate = true;
   static double? _setpointHumidity = 0.0;
   static double? _currentHumidity;
 
-  // ignore: prefer_typing_uninitialized_variables
-  var pwm = PWM(0, 1);
-
-  int setPwmPeriod = 10000000; //10000000ns = 100Hz freq, 1000000ns = 1000 Hz
+  static GPIO gpio21 = GPIO(21, GPIOdirection.gpioDirOut, 0);
 
   void initializeHumidifierService() {
+    // debugPrint('in initializeHumidifierService');
     try {
-      // debugPrint('Humidity First try catch, pwm = PWM(0, 0);');
-      pwm = PWM(0, 1);
-      // pwm.setPolarity(Polarity.pwmPolarityInversed);
-      // debugPrint('Humidity PWM Infor: ${pwm.getPWMinfo()}');
+      // debugPrint('GPIO 21 Infor: ${gpio21.getGPIOinfo()}');
     } catch (e) {
-      pwm.disable();
-      pwm.dispose();
-      // debugPrint('Humidity pwm = PWM(0, 0); Error: $e');
-    }
-    try {
-      debugPrint('Humidity Second try catch, pwm.setPeriodNs(10000000);');
-      pwm.setPeriodNs(10000000);
-      // debugPrint('Humidity PWM Infor: ${pwm.getPWMinfo()}');
-    } catch (e) {
-      pwm.disable();
-      pwm.dispose();
-      // debugPrint('Humidity pwm.setPeriodNs(10000000) Error: $e');
-    }
-    try {
-      // debugPrint('Humidity Third try catch, pwm.setDutyCycleNs(5000000);');
-      pwm.setDutyCycleNs(0);
-      // debugPrint('Humidity PWM Infor: ${pwm.getPWMinfo()}');
-    } catch (e) {
-      pwm.disable();
-      pwm.dispose();
-      // debugPrint('Humidity pwm.setDutyCycleNs(5000000) Error: $e');
-    }
-    try {
-      // debugPrint('Humidity Fourth try catch, pwm.enable();');
-      pwm.enable();
-      // debugPrint('Humidity PWM Infor: ${pwm.getPWMinfo()}');
-    } catch (e) {
-      pwm.disable();
-      pwm.dispose();
-      // debugPrint('Humidity pwm.enable() Error: $e');
-    }
-    try {
-      debugPrint('Fifth try catch, Polarity.pwmPolarityNormal');
-      pwm.setPolarity(Polarity.pwmPolarityNormal);
-      debugPrint('Humidifier PWM Infor: ${pwm.getPWMinfo()}');
-    } catch (e) {
-      pwm.disable();
-      pwm.dispose();
-      debugPrint('Polarity.pwmPolarityNormal Error: $e');
+      gpio21.dispose();
+      debugPrint('Init GPIO 21 as output Error: $e');
     }
   }
-
-  void disablePwm() {
-    pwm.disable();
-  }
-
-  void disposePwm() {
-    pwm.dispose();
-  }
-
 
   void updateSetpoint(double setpoint) {
     _setpointHumidity = setpoint;
     // debugPrint(
-    //     'in HumidifierService class: Heater setpoint updated to: $_setpointHumidity');
+    //     'in HumidifierService class: Humidity setpoint updated to: $_setpointHumidity');
   }
 
   void updateHumidity({required double currentHumidity}) {
     _currentHumidity = currentHumidity;
-    // debugPrint(
-    //     'in HumidifierService class: Current humidity updated to: $_currentHumidity ');
+    updateHumidifierState();
+  }
+
+  // Method to update the heater state
+  void updateHumidifierState() {
+      if (_currentHumidity! < _setpointHumidity! - onHysteresis) {
+        _humidifierState = false;
+        // debugPrint('Inside if Loop. System On Off State: $_systemOnOffstate');
+        // debugPrint('Humidifier is ON: $_humidifierState');
+        // debugPrint('Current Humidity: $_currentHumidity');
+        // debugPrint(
+        //     'Setpoint for Humidifier ON Humidity - onHysteresis: ${_setpointHumidity! - hysteresis}');
+        // debugPrint(
+        //     'Setpoint for Humidifier Off Humidity: ${_setpointHumidity! - offHysteresis}');
+        gpio21.write(_humidifierState);
+      } else if (_currentHumidity! > _setpointHumidity! - offHysteresis) {
+        _humidifierState = true;
+        // debugPrint('System On Off State: $_systemOnOffstate');
+        // debugPrint('Humidifier is OFF: $_humidifierState');
+        // debugPrint('Current Humidity: $_currentHumidity');
+        // debugPrint(
+        //     'Setpoint for Humidifier Off: Humidity - hysteresis: $_setpointHumidity! - hysteresis}');
+        // debugPrint(
+        //     'Setpoint for Humidifier Off: ${_setpointHumidity! - offHysteresis}');
+        gpio21.write(_humidifierState);
+      }
+    
+  }
+
+  void humidifierSystemOn() {
+    _systemOnOffstate = true;
+    // debugPrint('Turn on Humidifier System _systemOnOffstate = $_systemOnOffstate');
+  }
+
+  void humidifierSystemOff() {
+    // debugPrint('Set GPIO21 High = Relay Off');
+    _systemOnOffstate = false;
+    // debugPrint('Turn off Humidifier System _systemOnOffstate = $_systemOnOffstate');
+    try {
+      gpio21.write(true);
+    } catch (e) {
+      debugPrint('Error in GPIO 21: $e');
+    }
   }
 }
