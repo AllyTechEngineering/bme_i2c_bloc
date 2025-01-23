@@ -8,7 +8,7 @@ class HeaterService {
   bool _heaterState = false;
   static double? _setpointTemperature = 0.0;
   static double? _currentTemperature;
-  bool systemOnOffState = true;
+  static bool systemOnOffState = true;
   static GPIO gpio20 = GPIO(20, GPIOdirection.gpioDirOut, 0);
 
   void initializeHeaterService() {
@@ -36,8 +36,7 @@ class HeaterService {
 
   // Method to update the heater state
   void updateHeaterState() {
-    bool heaterOnOffState = heaterSystemOnOff();
-    if (heaterOnOffState) {
+    if (systemOnOffState) {
       debugPrint('in updateHeaterState method first if statement $systemOnOffState');
       if (_currentTemperature! < _setpointTemperature! - onHysteresis) {
         _heaterState = false;

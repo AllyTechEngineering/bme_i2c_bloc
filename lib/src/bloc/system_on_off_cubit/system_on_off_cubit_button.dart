@@ -18,13 +18,13 @@ class SystemOnOffCubit extends Cubit<SystemOnOffState> {
     if (state is SystemOnState) {
       debugPrint('Turning system off');
       // heaterServicePid.disableHeaterPwmPid();
-      humidifierService.humidifierSystemOff();
+      // humidifierService.humidifierSystemOff();
       heaterService.heaterSystemOnOff();
       emit(SystemOffState());
     } else {
       debugPrint('Turning system on');
       // heaterServicePid.enableHeaterPwmPid();
-      humidifierService.humidifierSystemOn();
+      // humidifierService.humidifierSystemOn();
       heaterService.heaterSystemOnOff();
       emit(SystemOnState());
     }
