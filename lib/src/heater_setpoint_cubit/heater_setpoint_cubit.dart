@@ -9,7 +9,7 @@ class HeaterSetpointCubit extends Cubit<HeaterSetpointState> {
   HeaterSetpointCubit(this.heaterService) : super(HeaterSetpointInitial());
 
   void setHeaterTemperature(double setpoint) {
-    debugPrint('In HeaterSetpointCubit new setpoint: $setpoint');
+    // debugPrint('In HeaterSetpointCubit new setpoint: $setpoint');
     heaterService.updateSetpoint(setpoint);
     emit(HeaterSetpointUpdated(setpoint));
   }
