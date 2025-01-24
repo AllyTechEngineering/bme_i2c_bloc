@@ -11,6 +11,8 @@ import 'package:bme_i2c/src/heater_setpoint_cubit/heater_setpoint_cubit.dart';
 import 'package:bme_i2c/src/heater_setpoint_cubit/heater_setpoint_state.dart';
 // import 'package:bme_i2c/src/services/heater_service.dart';
 import 'package:bme_i2c/src/widgets/heater_setpoint.dart';
+import 'package:bme_i2c/src/bloc/pwm_fan_cubit/pwm_fan_cubit.dart';
+import 'package:bme_i2c/src/bloc/pwm_fan_cubit/pwm_fan_state.dart';
 
 class I2CScreen extends StatelessWidget {
   const I2CScreen({super.key});
@@ -45,6 +47,7 @@ class I2CScreen extends StatelessWidget {
           humiditySetpointElevatedButton(_setpointHumiditycontroller, context),
           humiditySetpointBlocBuilder(),
           systemOnOffButton(),
+          pwmFanSlider(context),
         ],
       ),
     );
@@ -110,6 +113,35 @@ class I2CScreen extends StatelessWidget {
 
   SystemOnOffButton systemOnOffButton() {
     return const SystemOnOffButton();
+  }
+
+  Widget pwmFanSlider(BuildContext context) {
+    return BlocBuilder<PwmFanCubit, PwmFanState>(
+      builder: (context, state) {
+        double currentValue = 0;
+        if (state is PwmFanUpdated) {
+          currentValue = state.dutyCycle.toDouble();
+        }
+        return Column(
+          children: [
+            const Text('PWM Fan Duty Cycle'),
+            SizedBox(
+              width: 300,
+              child: Slider(
+                value: currentValue,
+                min: 0,
+                max: 100,
+                divisions: 100,
+                label: currentValue.round().toString(),
+                onChanged: (double value) {
+                  context.read<PwmFanCubit>().setPwmDutyCycle(value.toInt());
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 

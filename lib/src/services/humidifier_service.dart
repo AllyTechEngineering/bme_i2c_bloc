@@ -37,23 +37,23 @@ class HumidifierService {
     if (systemOnOffState) {
       if (_currentHumidity! < _setpointHumidity! - onHysteresis) {
         _humidifierState = false; // Relay is active low
-        debugPrint('Humidifier is ON: $_humidifierState');
-        debugPrint('Current Humidity: $_currentHumidity');
-        debugPrint(
-            'Setpoint for Humidifier ON _currentHumidity - onHysteresis: ${_setpointHumidity! - onHysteresis}');
-        debugPrint(
-            'Setpoint for Humidifier On _setpointHumidity: ${_setpointHumidity! - offHysteresis}');
+        // debugPrint('Humidifier is ON: $_humidifierState');
+        // debugPrint('Current Humidity: $_currentHumidity');
+        // debugPrint(
+        //     'Setpoint for Humidifier ON _currentHumidity - onHysteresis: ${_setpointHumidity! - onHysteresis}');
+        // debugPrint(
+        //     'Setpoint for Humidifier On _setpointHumidity: ${_setpointHumidity! - offHysteresis}');
         gpio21.write(_humidifierState); // Relay is active low
       } else if (_currentHumidity! > _setpointHumidity! - offHysteresis) {
         _humidifierState = true; //Relay is active low
-              debugPrint('in updateHeaterState method else if statement $systemOnOffState');
-        debugPrint('System On Off State: $systemOnOffState');
-        debugPrint('Humidifier is OFF: $_humidifierState');
-        debugPrint('Current Humidity: $_currentHumidity');
-        debugPrint(
-            'Setpoint for Humidifier OFF _setpointHumidity - offHysteresis: ${_setpointHumidity! - offHysteresis}}');
-        debugPrint(
-            'Setpoint for Humidifier Off Humidity: ${_setpointHumidity! - offHysteresis}');
+        //       debugPrint('in updateHeaterState method else if statement $systemOnOffState');
+        // debugPrint('System On Off State: $systemOnOffState');
+        // debugPrint('Humidifier is OFF: $_humidifierState');
+        // debugPrint('Current Humidity: $_currentHumidity');
+        // debugPrint(
+        //     'Setpoint for Humidifier OFF _setpointHumidity - offHysteresis: ${_setpointHumidity! - offHysteresis}}');
+        // debugPrint(
+        //     'Setpoint for Humidifier Off Humidity: ${_setpointHumidity! - offHysteresis}');
         gpio21.write(_humidifierState);
       }
     }

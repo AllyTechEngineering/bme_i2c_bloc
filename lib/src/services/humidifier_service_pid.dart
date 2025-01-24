@@ -13,8 +13,7 @@ class HumidifierServicePid {
   static double? _currentHumidity;
   DateTime? _previousTime;
 
-  // ignore: prefer_typing_uninitialized_variables
-  var pwm = PWM(0, 1);
+  static PWM pwm = PWM(0, 1);
 
   int setPwmPeriod = 10000000; //10000000ns = 100Hz freq, 1000000ns = 1000 Hz
 

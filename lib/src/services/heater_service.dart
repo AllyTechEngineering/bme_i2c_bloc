@@ -39,26 +39,26 @@ class HeaterService {
       // debugPrint('in updateHeaterState method first if statement $systemOnOffState');
       if (_currentTemperature! < _setpointTemperature! - onHysteresis) {
         _heaterState = false; //Relay is active low
-        debugPrint(
-            'in updateHeaterState method second if statement $systemOnOffState');
-        debugPrint('Heater is ON: $_heaterState');
-        debugPrint('Current Temperature: $_currentTemperature');
-        debugPrint(
-            'Setpoint for Heater ON Temperature - onHysteresis: ${_setpointTemperature! - onHysteresis}');
-        debugPrint(
-            'Setpoint for Heater Off Temperature: ${_setpointTemperature! - offHysteresis}');
+        // debugPrint(
+        //     'in updateHeaterState method second if statement $systemOnOffState');
+        // debugPrint('Heater is ON: $_heaterState');
+        // debugPrint('Current Temperature: $_currentTemperature');
+        // debugPrint(
+        //     'Setpoint for Heater ON Temperature - onHysteresis: ${_setpointTemperature! - onHysteresis}');
+        // debugPrint(
+        //     'Setpoint for Heater Off Temperature: ${_setpointTemperature! - offHysteresis}');
         gpio20.write(_heaterState);
       } else if (_currentTemperature! > _setpointTemperature! - offHysteresis) {
         _heaterState = true; //Relay is active low
-        debugPrint(
-            'in updateHeaterState method else if statement $systemOnOffState');
-        debugPrint('System On Off State: $systemOnOffState');
-        debugPrint('Heater is OFF: $_heaterState');
-        debugPrint('Current Temperature: $_currentTemperature');
-        debugPrint(
-            'Setpoint for Heater ON Temperature - offHysteresis: ${_setpointTemperature! - onHysteresis}}');
-        debugPrint(
-            'Setpoint for Heater Off Temperature: ${_setpointTemperature! - offHysteresis}');
+        // debugPrint(
+        //     'in updateHeaterState method else if statement $systemOnOffState');
+        // debugPrint('System On Off State: $systemOnOffState');
+        // debugPrint('Heater is OFF: $_heaterState');
+        // debugPrint('Current Temperature: $_currentTemperature');
+        // debugPrint(
+        //     'Setpoint for Heater ON Temperature - offHysteresis: ${_setpointTemperature! - onHysteresis}}');
+        // debugPrint(
+        //     'Setpoint for Heater Off Temperature: ${_setpointTemperature! - offHysteresis}');
         gpio20.write(_heaterState);
       }
     }
