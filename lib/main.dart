@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => SystemOnOffCubit(
-              HeaterService(), HumidifierService(), HeaterServicePid()),
+              HeaterService(), HumidifierService(), HeaterServicePid(), PwmFanService()),
         ),
         BlocProvider(
           create: (_) => PwmFanCubit(PwmFanService()),

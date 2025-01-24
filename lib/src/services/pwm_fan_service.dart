@@ -2,8 +2,9 @@ import 'package:dart_periphery/dart_periphery.dart';
 import 'package:flutter/foundation.dart';
 
 class PwmFanService {
-  static PWM pwm = PWM(0, 0); // PWM(0, 0) is the default PWM chip and channel GPIO 18
-
+  static PWM pwm =
+      PWM(0, 0); // PWM(0, 0) is the default PWM chip and channel GPIO 18
+  static bool systemOnOffState = true;
   int setPwmPeriod = 10000000; //10000000ns = 100Hz freq, 1000000ns = 1000 Hz
 
   void initializePwmFanService() {
@@ -40,20 +41,25 @@ class PwmFanService {
     }
   }
 
- void updatePwmDutyCycle(int updateDutyCycle) {
-    pwm.setDutyCycleNs(updateDutyCycle * 100000 );
-    debugPrint('In PwmFan updatePwmDutyCycle DutyCycleNs= ${pwm.getDutyCycleNs()}');
-    debugPrint('In PwmFan updatePwmDutyCycle PWM Info: ${pwm.getPWMinfo()}');
-
+  void updatePwmDutyCycle(int updateDutyCycle) {
+    debugPrint(
+        'In PwmFan updatePwmDutyCycle systemOnOffSate: $systemOnOffState');
+    if (systemOnOffState) {
+      pwm.setDutyCycleNs(updateDutyCycle * 100000);
+      debugPrint(
+          'In PwmFan updatePwmDutyCycle DutyCycleNs= ${pwm.getDutyCycleNs()}');
+      debugPrint('In PwmFan updatePwmDutyCycle PWM Info: ${pwm.getPWMinfo()}');
+    }
   }
 
-  void disablePwmFan() {
-    pwm.disable();
-    debugPrint('PwmFan Disable Method - PWM should be disabled: ${pwm.getEnabled()}');
+  void pwmFanSystemOnOff() {
+    systemOnOffState = !systemOnOffState;
+    debugPrint('In PwmFanService systemOnOffState: $systemOnOffState');
+    if (!systemOnOffState) {
+      pwm.disable();
+    }
+    if (systemOnOffState) {
+      pwm.enable();
+    }
   }
-
-  void enablePwmFan() {
-    pwm.enable();
-    debugPrint('PwmFan Enable Method - PWM should be enabled: ${pwm.getEnabled()}');
-  }// End of enablePwmFan method
 } // End of class PwmFanService
