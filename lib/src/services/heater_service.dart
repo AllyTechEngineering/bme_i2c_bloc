@@ -38,8 +38,9 @@ class HeaterService {
     if (systemOnOffState) {
       // debugPrint('in updateHeaterState method first if statement $systemOnOffState');
       if (_currentTemperature! < _setpointTemperature! - onHysteresis) {
-        _heaterState = false;//Relay is active low
-      debugPrint('in updateHeaterState method second if statement $systemOnOffState');
+        _heaterState = false; //Relay is active low
+        debugPrint(
+            'in updateHeaterState method second if statement $systemOnOffState');
         debugPrint('Heater is ON: $_heaterState');
         debugPrint('Current Temperature: $_currentTemperature');
         debugPrint(
@@ -49,7 +50,8 @@ class HeaterService {
         gpio20.write(_heaterState);
       } else if (_currentTemperature! > _setpointTemperature! - offHysteresis) {
         _heaterState = true; //Relay is active low
-              debugPrint('in updateHeaterState method else if statement $systemOnOffState');
+        debugPrint(
+            'in updateHeaterState method else if statement $systemOnOffState');
         debugPrint('System On Off State: $systemOnOffState');
         debugPrint('Heater is OFF: $_heaterState');
         debugPrint('Current Temperature: $_currentTemperature');
@@ -67,7 +69,7 @@ class HeaterService {
     // debugPrint(
     //     'in heaterSystemOnOff method System On/Off State: $systemOnOffState');
     if (systemOnOffState == false) {
-      gpio20.write(true);//Relay is active low
+      gpio20.write(true); //Relay is active low
     }
   }
 }
