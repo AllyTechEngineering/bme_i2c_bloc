@@ -57,9 +57,11 @@ class PwmFanService {
     debugPrint('In PwmFanService systemOnOffState: $systemOnOffState');
     if (!systemOnOffState) {
       pwm.disable();
+      debugPrint('In PwmFanService enable: ${pwm.getEnabled()}');
     }
     if (systemOnOffState) {
       pwm.enable();
+      debugPrint('In PwmFanService enable: ${pwm.getEnabled()}');
     }
   }
 } // End of class PwmFanService

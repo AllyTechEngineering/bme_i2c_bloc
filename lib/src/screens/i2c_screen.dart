@@ -19,15 +19,15 @@ class I2CScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: no_leading_underscores_for_local_identifiers
-    final TextEditingController _setpointTempcontroller =
-        TextEditingController();
-    // ignore: no_leading_underscores_for_local_identifiers
-    final TextEditingController _setpointHumiditycontroller =
-        TextEditingController();
+    // // ignore: no_leading_underscores_for_local_identifiers
+    // final TextEditingController _setpointTempcontroller =
+    //     TextEditingController();
+    // // ignore: no_leading_underscores_for_local_identifiers
+    // final TextEditingController _setpointHumiditycontroller =
+    //     TextEditingController();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('I2C Sensor Data')),
+      appBar: AppBar(title: const Text('Dough Proofer')),
       body: Column(
         children: [
           BlocBuilder<I2CCubit, I2CState>(
@@ -39,74 +39,74 @@ class I2CScreen extends StatelessWidget {
               );
             },
           ),
-          TemperatureSetpoint(setpointTempcontroller: _setpointTempcontroller),
-          heaterSetpointElevatedButton(_setpointTempcontroller, context),
-          heaterSetpointBlocBuilder(),
-          HumiditySetpoint(
-              setpointHumiditycontroller: _setpointHumiditycontroller),
-          humiditySetpointElevatedButton(_setpointHumiditycontroller, context),
-          humiditySetpointBlocBuilder(),
-          systemOnOffButton(),
+          temperatureSetpointSlider(context),
+          humiditySetpointSlider(context),
           pwmFanSlider(context),
+          systemOnOffButton(),
         ],
       ),
     );
   }
 
-  HeaterSetpointButton heaterSetpointElevatedButton(
-      // ignore: no_leading_underscores_for_local_identifiers
-      TextEditingController _setpointTempcontroller,
-      BuildContext context) {
-    return HeaterSetpointButton(
-      onPressed: () {
-        final double? setpoint = double.tryParse(_setpointTempcontroller.text);
-        if (setpoint != null) {
-          debugPrint('i2c_screen Heater setpoint: $setpoint');
-          context.read<HeaterSetpointCubit>().setHeaterTemperature(setpoint);
-        } else {
-          debugPrint('Invalid input');
-        }
-      },
-    );
-  }
-
-  BlocBuilder<HeaterSetpointCubit, HeaterSetpointState>
-      heaterSetpointBlocBuilder() {
+  Widget temperatureSetpointSlider(BuildContext context) {
     return BlocBuilder<HeaterSetpointCubit, HeaterSetpointState>(
       builder: (context, state) {
+        double currentValue = 0;
         if (state is HeaterSetpointUpdated) {
-          return Text('Setpoint: ${state.setpoint}');
+          currentValue = state.setpoint;
         }
-        return Container();
+        return Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Text('Temperature Setpoint: ${currentValue.toStringAsFixed(0)} °C'),
+            SizedBox(
+              width: 300,
+              child: Slider(
+                value: currentValue,
+                min: 0,
+                max: 100,
+                divisions: 100,
+                label: currentValue.round().toString(),
+                onChanged: (double value) {
+                  context
+                      .read<HeaterSetpointCubit>()
+                      .setHeaterTemperature(value);
+                },
+              ),
+            ),
+          ],
+        );
       },
     );
   }
 
-  HumiditySetpointButton humiditySetpointElevatedButton(
-      // ignore: no_leading_underscores_for_local_identifiers
-      TextEditingController _setpointHumiditycontroller,
-      BuildContext context) {
-    return HumiditySetpointButton(
-      onPressed: () {
-        final double? setpoint =
-            double.tryParse(_setpointHumiditycontroller.text);
-        if (setpoint != null) {
-          context.read<HumiditySetpointCubit>().setHumidity(setpoint);
-        } else {
-          debugPrint('Invalid input');
-        }
-      },
-    );
-  }
-
-  BlocBuilder<HumiditySetpointCubit, HumiditySetpointState>
-      humiditySetpointBlocBuilder() {
+  Widget humiditySetpointSlider(BuildContext context) {
     return BlocBuilder<HumiditySetpointCubit, HumiditySetpointState>(
       builder: (context, state) {
+        double currentValue = 0;
         if (state is HumiditySetpointUpdated) {
-          return Text('Humidity Setpoint: ${state.setpointHumidity}');
+          currentValue = state.setpointHumidity;
         }
-        return Container();
+        return Column(
+          children: [
+            Text('Humidity Setpoint: ${currentValue.toStringAsFixed(0)} %'),
+            SizedBox(
+              width: 300,
+              child: Slider(
+                value: currentValue,
+                min: 0,
+                max: 100,
+                divisions: 100,
+                label: currentValue.round().toString(),
+                onChanged: (double value) {
+                  context.read<HumiditySetpointCubit>().setHumidity(value);
+                },
+              ),
+            ),
+          ],
+        );
       },
     );
   }
@@ -124,7 +124,7 @@ class I2CScreen extends StatelessWidget {
         }
         return Column(
           children: [
-            const Text('PWM Fan Duty Cycle'),
+            Text('Fan Speed: ${currentValue.toStringAsFixed(0)} %'),
             SizedBox(
               width: 300,
               child: Slider(
@@ -200,3 +200,60 @@ class HumiditySetpoint extends StatelessWidget {
     );
   }
 }
+ // HeaterSetpointButton heaterSetpointElevatedButton(
+  //     // ignore: no_leading_underscores_for_local_identifiers
+  //     TextEditingController _setpointTempcontroller,
+  //     BuildContext context) {
+  //   return HeaterSetpointButton(
+  //     onPressed: () {
+  //       final double? setpoint = double.tryParse(_setpointTempcontroller.text);
+  //       if (setpoint != null) {
+  //         debugPrint('i2c_screen Heater setpoint: $setpoint');
+  //         context.read<HeaterSetpointCubit>().setHeaterTemperature(setpoint);
+  //       } else {
+  //         debugPrint('Invalid input');
+  //       }
+  //     },
+  //   );
+  // }
+
+  // BlocBuilder<HeaterSetpointCubit, HeaterSetpointState>
+  //     heaterSetpointBlocBuilder() {
+  //   return BlocBuilder<HeaterSetpointCubit, HeaterSetpointState>(
+  //     builder: (context, state) {
+  //       if (state is HeaterSetpointUpdated) {
+  //         return Text('Setpoint: ${state.setpoint}');
+  //       }
+  //       return Container();
+  //     },
+  //   );
+  // }
+
+  // HumiditySetpointButton humiditySetpointElevatedButton(
+  //     // ignore: no_leading_underscores_for_local_identifiers
+  //     TextEditingController _setpointHumiditycontroller,
+  //     BuildContext context) {
+  //   return HumiditySetpointButton(
+  //     onPressed: () {
+  //       final double? setpoint =
+  //           double.tryParse(_setpointHumiditycontroller.text);
+  //       if (setpoint != null) {
+  //         context.read<HumiditySetpointCubit>().setHumidity(setpoint);
+  //       } else {
+  //         debugPrint('Invalid input');
+  //       }
+  //     },
+  //   );
+  // }
+
+  // BlocBuilder<HumiditySetpointCubit, HumiditySetpointState>
+  //     humiditySetpointBlocBuilder() {
+  //   return BlocBuilder<HumiditySetpointCubit, HumiditySetpointState>(
+  //     builder: (context, state) {
+  //       if (state is HumiditySetpointUpdated) {
+  //         return Text('Humidity Setpoint: ${state.setpointHumidity}');
+  //       }
+  //       return Container();
+  //     },
+  //   );
+  // }
