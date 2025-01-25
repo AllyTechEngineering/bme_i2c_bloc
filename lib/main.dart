@@ -1,8 +1,10 @@
+import 'package:bme_i2c/src/bloc/level_sense_cubit/level_sense_cubit.dart';
 import 'package:bme_i2c/src/bloc/pwm_fan_cubit/pwm_fan_cubit.dart';
 import 'package:bme_i2c/src/bloc/system_on_off_cubit/system_on_off_cubit_button.dart';
 import 'package:bme_i2c/src/humidity_setpoint_cubit/humidity_setpoint_cubit.dart';
 import 'package:bme_i2c/src/services/heater_service_pid.dart';
 import 'package:bme_i2c/src/services/humidifier_service.dart';
+import 'package:bme_i2c/src/services/level_sense_service.dart';
 import 'package:bme_i2c/src/services/pwm_fan_service.dart';
 // import 'package:bme_i2c/src/services/pwm_sw_fan_service.dart';
 
@@ -39,6 +41,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => PwmFanCubit(PwmFanService()),
+        ),
+        BlocProvider(
+          create: (_) => LevelSenseCubit(LevelSenseService()),
         ),
       ],
       child: MaterialApp(

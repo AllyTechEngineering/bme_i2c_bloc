@@ -26,7 +26,6 @@ class I2CCubit extends Cubit<I2CState> {
     heaterService.initializeHeaterService();
     humidifierService.initializeHumidifierService();
     pwmFanService.initializePwmFanService();
-    levelSenseService.initializeLevelSenseService();
   }
 
   void startPolling() {

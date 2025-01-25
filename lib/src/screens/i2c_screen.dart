@@ -1,3 +1,5 @@
+import 'package:bme_i2c/src/bloc/level_sense_cubit/level_sense_cubit.dart';
+import 'package:bme_i2c/src/bloc/level_sense_cubit/level_sense_state.dart';
 import 'package:bme_i2c/src/humidity_setpoint_cubit/humidity_setpoint_cubit.dart';
 import 'package:bme_i2c/src/humidity_setpoint_cubit/humidity_setpoint_state.dart';
 import 'package:bme_i2c/src/widgets/data_display.dart';
@@ -42,6 +44,7 @@ class I2CScreen extends StatelessWidget {
           temperatureSetpointSlider(context),
           humiditySetpointSlider(context),
           pwmFanSlider(context),
+          buildDoughLevelIndicator(context),
           systemOnOffButton(),
         ],
       ),
@@ -77,6 +80,22 @@ class I2CScreen extends StatelessWidget {
               ),
             ),
           ],
+        );
+      },
+    );
+  }
+
+  Widget buildDoughLevelIndicator(BuildContext context) {
+    return BlocBuilder<LevelSenseCubit, LevelSenseState>(
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            state.isLevelDetected
+                ? 'Dough has risen enough'
+                : 'Dough has not risen enough',
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
         );
       },
     );
