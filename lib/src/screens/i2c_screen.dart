@@ -1,7 +1,7 @@
 import 'package:bme_i2c/src/humidity_setpoint_cubit/humidity_setpoint_cubit.dart';
 import 'package:bme_i2c/src/humidity_setpoint_cubit/humidity_setpoint_state.dart';
 import 'package:bme_i2c/src/widgets/data_display.dart';
-import 'package:bme_i2c/src/widgets/humidity_setpoint.dart';
+// import 'package:bme_i2c/src/widgets/humidity_setpoint.dart';
 import 'package:bme_i2c/src/widgets/system_on_off_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +10,7 @@ import 'package:bme_i2c/src/i2c_bme280_cubit/i2c_state.dart';
 import 'package:bme_i2c/src/heater_setpoint_cubit/heater_setpoint_cubit.dart';
 import 'package:bme_i2c/src/heater_setpoint_cubit/heater_setpoint_state.dart';
 // import 'package:bme_i2c/src/services/heater_service.dart';
-import 'package:bme_i2c/src/widgets/heater_setpoint.dart';
+// import 'package:bme_i2c/src/widgets/heater_setpoint.dart';
 import 'package:bme_i2c/src/bloc/pwm_fan_cubit/pwm_fan_cubit.dart';
 import 'package:bme_i2c/src/bloc/pwm_fan_cubit/pwm_fan_state.dart';
 

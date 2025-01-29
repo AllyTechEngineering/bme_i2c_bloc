@@ -2,8 +2,8 @@ import 'package:dart_periphery/dart_periphery.dart';
 import 'package:flutter/foundation.dart';
 
 class PwmFanService {
-  static PWM pwm =
-      PWM(0, 0); // PWM(0, 0) is the default PWM chip and channel GPIO 18
+  static PWM pwm = PWM(2, 0);
+
   static bool systemOnOffState = true;
   int setPwmPeriod = 10000000; //10000000ns = 100Hz freq, 1000000ns = 1000 Hz
 

@@ -4,6 +4,7 @@ import 'package:bme_i2c/src/humidity_setpoint_cubit/humidity_setpoint_cubit.dart
 import 'package:bme_i2c/src/services/heater_service_pid.dart';
 import 'package:bme_i2c/src/services/humidifier_service.dart';
 import 'package:bme_i2c/src/services/pwm_fan_service.dart';
+// import 'package:bme_i2c/src/services/pwm_sw_fan_service.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,8 +34,8 @@ class MyApp extends StatelessWidget {
           create: (_) => HumiditySetpointCubit(HumidifierService()),
         ),
         BlocProvider(
-          create: (_) => SystemOnOffCubit(
-              HeaterService(), HumidifierService(), HeaterServicePid(), PwmFanService()),
+          create: (_) => SystemOnOffCubit(HeaterService(), HumidifierService(),
+              HeaterServicePid(), PwmFanService()),
         ),
         BlocProvider(
           create: (_) => PwmFanCubit(PwmFanService()),

@@ -12,8 +12,8 @@ class SystemOnOffCubit extends Cubit<SystemOnOffState> {
   final HeaterServicePid heaterServicePid;
   final PwmFanService pwmFanService;
 
-  SystemOnOffCubit(
-      this.heaterService, this.humidifierService, this.heaterServicePid, this.pwmFanService)
+  SystemOnOffCubit(this.heaterService, this.humidifierService,
+      this.heaterServicePid, this.pwmFanService)
       : super(SystemOnState());
 
   void toggleSystemState() {
