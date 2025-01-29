@@ -10,58 +10,58 @@ class PwmFanService {
   void initializePwmFanService() {
     try {
       // pwm = PWM(0, 1);
-      debugPrint('Initial PwmFan Info: ${pwm.getPWMinfo()}');
+      // debugPrint('Initial PwmFan Info: ${pwm.getPWMinfo()}');
     } catch (e) {
       debugPrint('Initial PwmFan Error: $e');
     }
     try {
       pwm.setPeriodNs(10000000);
-      debugPrint('PwmFan period Info: ${pwm.getPeriodNs()}');
+      // debugPrint('PwmFan period Info: ${pwm.getPeriodNs()}');
     } catch (e) {
       debugPrint('PwmFan period Error: $e');
     }
     try {
       pwm.setDutyCycleNs(0);
-      debugPrint('PwmFan Dutycycle Info: ${pwm.getDutyCycleNs()}');
+      // debugPrint('PwmFan Dutycycle Info: ${pwm.getDutyCycleNs()}');
     } catch (e) {
       debugPrint('PwmFan Dutycycle Error: $e');
     }
     try {
       pwm.enable();
-      debugPrint('PwmFan Enable Info: ${pwm.getEnabled()}');
+      // debugPrint('PwmFan Enable Info: ${pwm.getEnabled()}');
     } catch (e) {
       debugPrint('PwmFan Enable Error: $e');
     }
     try {
       pwm.setPolarity(Polarity.pwmPolarityNormal);
-      debugPrint('PwmFan Polarity Info: ${pwm.getPolarity()}');
-      debugPrint('Final PwmFan Info: ${pwm.getPWMinfo()}');
+      // debugPrint('PwmFan Polarity Info: ${pwm.getPolarity()}');
+      // debugPrint('Final PwmFan Info: ${pwm.getPWMinfo()}');
     } catch (e) {
       debugPrint('PwmFan Polarity Error: $e');
     }
   }
 
   void updatePwmDutyCycle(int updateDutyCycle) {
-    debugPrint(
-        'In PwmFan updatePwmDutyCycle systemOnOffSate: $systemOnOffState');
+    // debugPrint(
+    //     'In PwmFan updatePwmDutyCycle systemOnOffSate: $systemOnOffState');
     if (systemOnOffState) {
       pwm.setDutyCycleNs(updateDutyCycle * 100000);
-      debugPrint(
-          'In PwmFan updatePwmDutyCycle DutyCycleNs= ${pwm.getDutyCycleNs()}');
-      debugPrint('In PwmFan updatePwmDutyCycle PWM Info: ${pwm.getPWMinfo()}');
+      // debugPrint(
+      //     'In PwmFan updatePwmDutyCycle DutyCycleNs= ${pwm.getDutyCycleNs()}');
+      // debugPrint('In PwmFan updatePwmDutyCycle PWM Info: ${pwm.getPWMinfo()}');
     }
   }
 
   void pwmFanSystemOnOff() {
     systemOnOffState = !systemOnOffState;
-    debugPrint('In PwmFanService systemOnOffState: $systemOnOffState');
+    // debugPrint('In PwmFanService systemOnOffState: $systemOnOffState');
     if (!systemOnOffState) {
       pwm.disable();
-      debugPrint('In PwmFanService enable: ${pwm.getEnabled()}');
+      // debugPrint('In PwmFanService enable: ${pwm.getEnabled()}');
     }
     if (systemOnOffState) {
       pwm.enable();
-      debugPrint('In PwmFanService enable: ${pwm.getEnabled()}');
+      // debugPrint('In PwmFanService enable: ${pwm.getEnabled()}');
     }
   }
 } // End of class PwmFanService
