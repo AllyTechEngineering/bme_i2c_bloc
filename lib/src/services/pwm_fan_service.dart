@@ -2,7 +2,8 @@ import 'package:dart_periphery/dart_periphery.dart';
 import 'package:flutter/foundation.dart';
 
 class PwmFanService {
-  static PWM pwm = PWM(2, 0);
+  static PWM pwm = PWM(0, 0);
+  //(0,0) Pin 18 for Model 4. (2,0) for Model 5 and requires bash script to enable PWM
 
   static bool systemOnOffState = true;
   int setPwmPeriod = 10000000; //10000000ns = 100Hz freq, 1000000ns = 1000 Hz
