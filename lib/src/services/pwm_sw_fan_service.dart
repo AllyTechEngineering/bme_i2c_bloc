@@ -53,7 +53,7 @@ class PwmSwFanService {
     }
 
     // Start PWM with periodic timer
-    _pwmTimer = Timer.periodic(Duration(milliseconds: 10), (timer) {
+    _pwmTimer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
       int highTime =
           (period * dutyCycle) ~/ 100; // Calculate high time in nanoseconds
       int lowTime = period - highTime; // Calculate low time in nanoseconds
