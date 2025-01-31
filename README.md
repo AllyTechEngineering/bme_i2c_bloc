@@ -119,20 +119,20 @@ To check for how many channels per pwmchip
 ```
 grep . /sys/class/pwm/pwmchip*/npwm
 ```
-Response:
+Response - 2 channels:
 ``
 /sys/class/pwm/pwmchip0/npwm:2
 ``
-pwmchip0 has 2 channels
+Response - 4 channels:
 ``
 /sys/class/pwm/pwmchip2/npwm:4
 ``
-pwmchip2 has 4 channels
+Response - 4 channels:
 ``
 /sys/class/pwm/pwmchip6/npwm:4
 ``
-pwmchip6 has 4 channels
-- 
+
+
 This command will check to see if a pwm is enabled.
 ```
 cat /sys/class/pwm/pwmchip0/pwm0/enable
