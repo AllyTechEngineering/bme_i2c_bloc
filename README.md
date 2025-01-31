@@ -81,12 +81,23 @@ You will need to reboot.
 These commands will check with pwm0 has been exported.
 ```
 ls /sys/class/pwmchip0
+```
+Response:
+```
 device  export  npwm  power  pwm0  subsystem  uevent  unexport
+```
 ```
 ls /sys/class/pwmchip2
+```
+Response:
+```
 device  export  npwm  power  pwm0  subsystem  uevent  unexport
 ```
+```
 ls /sys/class/pwmchip6
+```
+Response:
+```
 device  export  npwm  power  pwm0  subsystem  uevent  unexport
 ```
 
@@ -102,13 +113,15 @@ Response:
 /sys/class/pwm/pwmchip6/npwm:4
 ```
 
-This command will check to see if a pwm is enabled. This is for pwmchip0,pwm0.
+This command will check to see if a pwm is enabled.
 ```
 cat /sys/class/pwm/pwmchip0/pwm0/enable
 ```
-cat /sys/class/pwm/pwmchip0/pwm0/enable
 ```
-cat /sys/class/pwm/pwmchip0/pwm0/enable
+cat /sys/class/pwm/pwmchip2/pwm/enable
+```
+```
+cat /sys/class/pwm/pwmchip6/pwm0/enable
 ```
 If the response is 0, the pwm has been exported but not enabled.
 If the response is 1, the pwm has been enabled.
