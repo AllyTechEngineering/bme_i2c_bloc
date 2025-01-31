@@ -17,7 +17,7 @@ closed loop control system with touchscreen.
 ## My Fix For Model 5 PWM issues - Model 4B solutions in upcoming section.
 ### Step One Create a Custom dtoverlay
 *******************************************************************************************************************
-This link has all of the details for creating the dtoverlay that I find works for pwmchip2, pwm0
+This link has all of the details for creating the dtoverlay that I find works for pwmchip0, pwm0, pwmchip2, pwm0 and pwmchip6 pwm0 (channel 0).
 https://gist.github.com/Gadgetoid/b92ad3db06ff8c264eef2abf0e09d569
 
 In a new terminal window:
