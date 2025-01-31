@@ -91,7 +91,7 @@ You will need to reboot.
 
 ### Step Three: Check the PWMs
 *******************************************************************************************************************
-These commands will check with pwm0 has been exported.
+These commands will check with pwm0 has been exported. If you do not see pwm0 then retrace you steps and try again.
 ```
 ls /sys/class/pwmchip0
 ```
@@ -123,14 +123,15 @@ Response:
 ``
 /sys/class/pwm/pwmchip0/npwm:2
 ``
-- pwmchip0 has 2 channels
+pwmchip0 has 2 channels
 ``
 /sys/class/pwm/pwmchip2/npwm:4
-- pwmchip2 has 4 channels
+``
+pwmchip2 has 4 channels
 ``
 /sys/class/pwm/pwmchip6/npwm:4
 ``
-- pwmchip6 has 4 channels
+pwmchip6 has 4 channels
 - 
 This command will check to see if a pwm is enabled.
 ```
