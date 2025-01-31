@@ -146,6 +146,12 @@ cat /sys/class/pwm/pwmchip6/pwm0/enable
 If the response is 0, the pwm has been exported but not enabled.
 If the response is 1, the pwm has been enabled.
 
+### pinctrl - Does Not Show The Correct Information
+pinctrl shows the correct alt function, GPIO Pin and pwm channel number but the pwmchip number is wrong.<br/>
+12: a0    pd | lo // GPIO12 = PWM0_CHAN0<br/>
+13: a0    pd | lo // GPIO13 = PWM0_CHAN1<br/>
+18: a3    pd | lo // GPIO18 = PWM0_CHAN2<br/>
+19: a3    pd | lo // GPIO19 = PWM0_CHAN3<br/>
 
 ### Step Four: Test the PWMs with a Bash Script
 *******************************************************************************************************************
@@ -233,12 +239,7 @@ pwm0 = PWM(2, 0);<br/>
 pwm1 = PWM(2, 1);<br/>
 pwm2 = PWM(2, 2);<br/>
 pwm3 = PWM(2, 3);<br/>
-### pinctrl - Does Not Show The Correct Information
-pinctrl shows the correct alt function, GPIO Pin and pwm channel number but the pwmchip number is wrong.<br/>
-12: a0    pd | lo // GPIO12 = PWM0_CHAN0<br/>
-13: a0    pd | lo // GPIO13 = PWM0_CHAN1<br/>
-18: a3    pd | lo // GPIO18 = PWM0_CHAN2<br/>
-19: a3    pd | lo // GPIO19 = PWM0_CHAN3<br/>
+
 
 
 
