@@ -1,4 +1,3 @@
-// httpService.dart
 import 'dart:convert';
 import 'dart:io';
 import 'package:bme_i2c/src/bloc/repositories/data_repository.dart';
@@ -7,11 +6,14 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
 class HttpService {
+  HttpServer? _server; // Store server instance for future control
+
   final Map<String, dynamic> _variables = {
     "temperatureSetPoint": 0.0,
     "humiditySetPoint": 0.0,
     "currentTemperature": 0.0,
     "currentHumidity": 0.0,
+    "pressure": 0.0, // New sensor data field
     "systemOnOff": false,
     "doughLevel": false,
   };
@@ -19,21 +21,37 @@ class HttpService {
   final DataRepository dataRepository =
       DataRepository(); // Connect DataRepository
 
-  HttpService();
+  HttpService() {
+    debugPrint("HttpService Constructor Called");
+    // 🔹 Listen for sensor data updates
+    dataRepository.dataStream.listen((sensorData) {
+      debugPrint("Received Sensor Data: $sensorData");
+      sensorData.forEach((key, value) {
+        if (_variables.containsKey(key)) {
+          _variables[key] = value; // Update local variables
+        }
+      });
+
+      debugPrint("Updated Variables from Sensor: $_variables");
+    });
+  }
 
   void startServer() async {
-    final handler =
-        Pipeline().addMiddleware(logRequests()).addHandler(_handleRequest);
+    final handler = const Pipeline()
+        .addMiddleware(logRequests())
+        .addHandler(_handleRequest);
 
     // Start the HTTP server
-    final server = await shelf_io.serve(handler, InternetAddress.anyIPv4, 8080);
-    debugPrint('Server running on ${server.address.address}:${server.port}');
+    _server = await shelf_io.serve(handler, InternetAddress.anyIPv4, 8080);
+    debugPrint(
+        'Server running on ${_server?.address.address}:${_server?.port}');
 
     // Advertise the service using Avahi
     advertiseMdnsService();
   }
 
   void advertiseMdnsService() {
+    debugPrint("Advertising service using Avahi...");
     Process.run(
       'avahi-publish-service',
       ['doughproofer', '_http._tcp', '8080'],

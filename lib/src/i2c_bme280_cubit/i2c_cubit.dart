@@ -14,9 +14,9 @@ class I2CCubit extends Cubit<I2CState> {
   final HumidifierService humidifierService = HumidifierService();
   final PwmFanService pwmFanService = PwmFanService();
   final LevelSenseService levelSenseService = LevelSenseService();
-  final DataRepository dataRepository = DataRepository();
+  final DataRepository dataRepository;
 
-  I2CCubit()
+  I2CCubit({required this.dataRepository})
       : super(const I2CState(temperature: 0.0, humidity: 0.0, pressure: 0.0)) {
     _initialize();
   }
