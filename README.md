@@ -237,18 +237,10 @@ pwm3 = PWM(2, 3);
 ``
 ### pinctrl - Does Not Show The Correct Information
 pinctrl shows the correct alt function, GPIO Pin and pwm channel number but the pwmchip number is wrong.
-``
 12: a0    pd | lo // GPIO12 = PWM0_CHAN0<br/>
-``
-``
 13: a0    pd | lo // GPIO13 = PWM0_CHAN1<br/>
-``
-``
 18: a3    pd | lo // GPIO18 = PWM0_CHAN2<br/>
-``
-``
 19: a3    pd | lo // GPIO19 = PWM0_CHAN3<br/>
-``
 
 
 
