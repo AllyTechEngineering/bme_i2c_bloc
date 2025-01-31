@@ -235,5 +235,11 @@ pwm1 = PWM(2, 1);
 pwm2 = PWM(2, 2);
 pwm3 = PWM(2, 3);
 ``
+### pinctrl - Does Not Show The Correct Information
+12: a0    pd | lo // GPIO12 = PWM0_CHAN0
+13: a0    pd | lo // GPIO13 = PWM0_CHAN1
+18: a3    pd | lo // GPIO18 = PWM0_CHAN2
+19: a3    pd | lo // GPIO19 = PWM0_CHAN3
+
 
 
