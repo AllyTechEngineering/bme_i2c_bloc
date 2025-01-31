@@ -123,7 +123,9 @@ Response:
 ``
 /sys/class/pwm/pwmchip0/npwm:2
 ``
+``
 /sys/class/pwm/pwmchip2/npwm:4
+``
 ``
 /sys/class/pwm/pwmchip6/npwm:4
 ``
