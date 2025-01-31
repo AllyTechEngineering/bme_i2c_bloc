@@ -1,0 +1,74 @@
+// httpService.dart
+import 'dart:convert';
+import 'dart:io';
+import 'package:bme_i2c/src/bloc/repositories/data_repository.dart';
+import 'package:flutter/foundation.dart';
+import 'package:shelf/shelf.dart';
+import 'package:shelf/shelf_io.dart' as shelf_io;
+
+class HttpService {
+  final Map<String, dynamic> _variables = {
+    "temperatureSetPoint": 0.0,
+    "humiditySetPoint": 0.0,
+    "currentTemperature": 0.0,
+    "currentHumidity": 0.0,
+    "systemOnOff": false,
+    "doughLevel": false,
+  };
+
+  final DataRepository dataRepository =
+      DataRepository(); // Connect DataRepository
+
+  HttpService();
+
+  void startServer() async {
+    final handler =
+        Pipeline().addMiddleware(logRequests()).addHandler(_handleRequest);
+
+    // Start the HTTP server
+    final server = await shelf_io.serve(handler, InternetAddress.anyIPv4, 8080);
+    debugPrint('Server running on ${server.address.address}:${server.port}');
+
+    // Advertise the service using Avahi
+    advertiseMdnsService();
+  }
+
+  void advertiseMdnsService() {
+    Process.run(
+      'avahi-publish-service',
+      ['doughproofer', '_http._tcp', '8080'],
+    ).then((ProcessResult results) {
+      debugPrint("Service advertised: \${results.stdout}");
+    }).catchError((e) {
+      debugPrint("Failed to advertise service: \$e");
+    });
+  }
+
+  Future<Response> _handleRequest(Request request) async {
+    try {
+      if (request.method == "GET") {
+        return Response.ok(jsonEncode(_variables),
+            headers: {'Content-Type': 'application/json'});
+      } else if (request.method == "POST") {
+        final payload = await request.readAsString();
+        final Map<String, dynamic> data = jsonDecode(payload);
+
+        data.forEach((key, value) {
+          if (_variables.containsKey(key)) {
+            _variables[key] = value;
+          }
+        });
+
+        // Send updated data to DataRepository
+        dataRepository.updateData(Map<String, dynamic>.from(_variables));
+
+        return Response.ok("Data updated successfully");
+      } else {
+        return Response.notFound("Unsupported request method");
+      }
+    } catch (e) {
+      return Response.internalServerError(
+          body: "Error processing request: \$e");
+    }
+  }
+}
