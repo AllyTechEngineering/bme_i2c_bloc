@@ -70,7 +70,7 @@ dtoverlay=pwm-pi5
 
 ### Step Two: Create a udev rule
 *******************************************************************************************************************
-We need to create a new udev rule that will export and enable the pwm channels at boot
+We need to create a new udev rule that will export the pwm channels at boot. Linux by default does not do this.
 ```
 sudo nano /etc/udev/rules.d/99-pwm.rules
 ```
@@ -123,13 +123,15 @@ Response:
 ``
 /sys/class/pwm/pwmchip0/npwm:2
 ``
+- pwmchip0 has 2 channels
 ``
 /sys/class/pwm/pwmchip2/npwm:4
-``
+- pwmchip2 has 4 channels
 ``
 /sys/class/pwm/pwmchip6/npwm:4
 ``
-
+- pwmchip6 has 4 channels
+- 
 This command will check to see if a pwm is enabled.
 ```
 cat /sys/class/pwm/pwmchip0/pwm0/enable
