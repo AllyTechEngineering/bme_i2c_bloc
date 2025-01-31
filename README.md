@@ -228,15 +228,13 @@ If you set the duty cycle to 0 the PWM is low and if you set it at 100000 it is 
 
 ### Step Five, Test in your Flutter App with dart_periphery
 *************************************************************************************************
-Using the dtoverlay and udev as shown, I have successfully ran all four PWMs at the same time in my app.
-``
-pwm0 = PWM(2, 0);
-pwm1 = PWM(2, 1);
-pwm2 = PWM(2, 2);
-pwm3 = PWM(2, 3);
-``
+Using the dtoverlay and udev as shown, I have successfully ran all four PWMs at the same time in my app.<br/>
+pwm0 = PWM(2, 0);<br/>
+pwm1 = PWM(2, 1);<br/>
+pwm2 = PWM(2, 2);<br/>
+pwm3 = PWM(2, 3);<br/>
 ### pinctrl - Does Not Show The Correct Information
-pinctrl shows the correct alt function, GPIO Pin and pwm channel number but the pwmchip number is wrong.
+pinctrl shows the correct alt function, GPIO Pin and pwm channel number but the pwmchip number is wrong.<br/>
 12: a0    pd | lo // GPIO12 = PWM0_CHAN0<br/>
 13: a0    pd | lo // GPIO13 = PWM0_CHAN1<br/>
 18: a3    pd | lo // GPIO18 = PWM0_CHAN2<br/>
