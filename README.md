@@ -149,7 +149,7 @@ If the response is 1, the pwm has been enabled.
 
 ### Step Four: Test the PWMs with a Bash Script
 *******************************************************************************************************************
-I am testing either pwmchip0,pwm0 pwmchip2,pwm0 or pwmchip6,pwm0. In this script it is pwmchip2,pwm0
+In this script I am testing pwmchip2, pwm0
 If you changed your dtoverlay and udev rules you will need to change the script.
 
 For GPIO 12,13,18 and 19 the alt function for PWM is either a0, a4 or a5.
