@@ -121,9 +121,9 @@ grep . /sys/class/pwm/pwmchip*/npwm
 ```
 Response:
 ``
-/sys/class/pwm/pwmchip0/npwm:2
-/sys/class/pwm/pwmchip2/npwm:4
-/sys/class/pwm/pwmchip6/npwm:4
+- /sys/class/pwm/pwmchip0/npwm:2
+- /sys/class/pwm/pwmchip2/npwm:4
+- /sys/class/pwm/pwmchip6/npwm:4
 ``
 
 This command will check to see if a pwm is enabled.
@@ -149,7 +149,11 @@ For GPIO 12,13,18 and 19 the alt function for PWM is either a0, a4 or a5.
 
 Full transparancy, I am not a bash script expert so if you have a better solution please share!
 
-In terminal, in a folder of your choice, sudo nano pwmchip2_pwm0.sh and then copy the following script:
+In terminal, in a folder of your choice, create the script file.
+```
+sudo nano pwmchip2_pwm0.sh
+```
+If you have changed pwmchip or channel or pin change the script to your need settings. Copy and paste the script.
 ```
 
 #!/bin/bash  # Ensure the script runs with bash
@@ -203,9 +207,15 @@ echo "PWM 0 (GPIO $PIN, Fn. $FUNC) set to $PERIOD ns, $DUTY_CYCLE ns."
 
 Save the file with a name that makes sense to you. For example, pwmchip2_pwm0.sh
 
-To set permissions so you can run the script: sudo chmod +x pwmchip2_pwm0.sh
+To set permissions so you can run the script - make sure the file name is the same as the script.
+```
+sudo chmod +x pwmchip2_pwm0.sh
+```
 
-Use this command in terminal (assuming you are in the same folder) to run the script: sudo bash ./pwmchip2_pwm0.sh 1000000 500000
+Use this command in terminal (assuming you are in the same folder) to run the script: 
+```
+sudo bash ./pwmchip2_pwm0.sh 1000000 500000
+```
 This sets the period in ns and the duty cycle in ns which results in a 50% duty cycle square wave.
 If you set the duty cycle to 0 the PWM is low and if you set it at 100000 it is high.
 
