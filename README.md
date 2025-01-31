@@ -51,9 +51,22 @@ Use sudo nano and copy this code and save as pwm-pi5-overlay.dts
 };
 ```
 
-To compile (copy this at the command line): dtc -I dts -O dtb -o pwm-pi5.dtbo pwm-pi5-overlay.dts
-Then to install (copy this at the command line): sudo cp pwm-pi5.dtbo /boot/firmware/overlays/
-Comment out any pwm dtoverlays and add this line dtoverlay=pwm-pi5 to boot/firmware config.txt (use sudo nano config.txt)
+To compile (copy this at the command line): 
+```
+dtc -I dts -O dtb -o pwm-pi5.dtbo pwm-pi5-overlay.dts
+```
+Then to install (copy this at the command line): 
+```
+sudo cp pwm-pi5.dtbo /boot/firmware/overlays/
+```
+Comment out any pwm dtoverlays and add the dtoverlay config.txt in /boot/firmware/
+```
+sudo nano config.txt
+```
+```
+dtoverlay=pwm-pi5
+```
+
 
 ### Step Two: Create a udev rule
 *******************************************************************************************************************
