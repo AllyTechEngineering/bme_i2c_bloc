@@ -119,15 +119,15 @@ To check for how many channels per pwmchip
 ```
 grep . /sys/class/pwm/pwmchip*/npwm
 ```
-Response - 2 channels:
+- Response - 2 channels:
 ``
 /sys/class/pwm/pwmchip0/npwm:2
 ``
-Response - 4 channels:
+- Response - 4 channels:
 ``
 /sys/class/pwm/pwmchip2/npwm:4
 ``
-Response - 4 channels:
+- Response - 4 channels:
 ``
 /sys/class/pwm/pwmchip6/npwm:4
 ``
