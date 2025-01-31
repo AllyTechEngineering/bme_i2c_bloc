@@ -96,23 +96,23 @@ These commands will check with pwm0 has been exported.
 ls /sys/class/pwmchip0
 ```
 Response:
-```
+``
 device  export  npwm  power  pwm0  subsystem  uevent  unexport
-```
+``
 ```
 ls /sys/class/pwmchip2
 ```
 Response:
-```
+``
 device  export  npwm  power  pwm0  subsystem  uevent  unexport
-```
+``
 ```
 ls /sys/class/pwmchip6
 ```
 Response:
-```
+``
 device  export  npwm  power  pwm0  subsystem  uevent  unexport
-```
+``
 
 Other usefull command line instructions:
 To check for how many channels per pwmchip
@@ -120,11 +120,11 @@ To check for how many channels per pwmchip
 grep . /sys/class/pwm/pwmchip*/npwm
 ```
 Response:
-```
+``
 /sys/class/pwm/pwmchip0/npwm:2
 /sys/class/pwm/pwmchip2/npwm:4
 /sys/class/pwm/pwmchip6/npwm:4
-```
+``
 
 This command will check to see if a pwm is enabled.
 ```
