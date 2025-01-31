@@ -150,7 +150,7 @@ If the response is 1, the pwm has been enabled.
 ### Step Four: Test the PWMs with a Bash Script
 *******************************************************************************************************************
 I am testing either pwmchip0,pwm0 pwmchip2,pwm0 or pwmchip6,pwm0. In this script it is pwmchip2,pwm0
-If you changed your dtoverlay and udev rules you will need to change this script accordingly.
+If you changed your dtoverlay and udev rules you will need to change the script.
 
 For GPIO 12,13,18 and 19 the alt function for PWM is either a0, a4 or a5.
 
@@ -160,7 +160,7 @@ In terminal, in a folder of your choice, create the script file.
 ```
 sudo nano pwmchip2_pwm0.sh
 ```
-If you have changed pwmchip or channel or pin change the script to your need settings. Copy and paste the script.
+If you have changed pwmchip, channel or pin change the script to your settings. Copy and paste the script.
 ```
 
 #!/bin/bash  # Ensure the script runs with bash
@@ -229,11 +229,11 @@ If you set the duty cycle to 0 the PWM is low and if you set it at 100000 it is 
 ### Step Five, Test in your Flutter App with dart_periphery
 *************************************************************************************************
 Using the dtoverlay and udev as shown, I have successfully ran all four PWMs at the same time in my app.
-```
+``
 pwm0 = PWM(2, 0);
 pwm1 = PWM(2, 1);
 pwm2 = PWM(2, 2);
 pwm3 = PWM(2, 3);
-```
+``
 
 
