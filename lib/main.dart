@@ -37,20 +37,21 @@ class MyApp extends StatelessWidget {
               I2CCubit(dataRepository: dataRepository)..startPolling(),
         ),
         BlocProvider(
-          create: (_) => HeaterSetpointCubit(HeaterService()),
+          create: (_) => HeaterSetpointCubit(HeaterService(), dataRepository),
         ),
         BlocProvider(
-          create: (_) => HumiditySetpointCubit(HumidifierService()),
+          create: (_) =>
+              HumiditySetpointCubit(HumidifierService(), dataRepository),
         ),
         BlocProvider(
           create: (_) => SystemOnOffCubit(HeaterService(), HumidifierService(),
-              HeaterServicePid(), PwmFanService()),
+              HeaterServicePid(), PwmFanService(), dataRepository),
         ),
         BlocProvider(
-          create: (_) => PwmFanCubit(PwmFanService()),
+          create: (_) => PwmFanCubit(PwmFanService(), dataRepository),
         ),
         BlocProvider(
-          create: (_) => LevelSenseCubit(LevelSenseService()),
+          create: (_) => LevelSenseCubit(LevelSenseService(), dataRepository),
         ),
       ],
       child: MaterialApp(

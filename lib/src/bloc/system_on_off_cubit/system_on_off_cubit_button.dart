@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:bme_i2c/src/bloc/repositories/data_repository.dart';
 import 'package:bme_i2c/src/services/heater_service.dart';
 import 'package:bme_i2c/src/services/heater_service_pid.dart';
 import 'package:bme_i2c/src/services/humidifier_service.dart';
@@ -11,9 +12,10 @@ class SystemOnOffCubit extends Cubit<SystemOnOffState> {
   final HumidifierService humidifierService;
   final HeaterServicePid heaterServicePid;
   final PwmFanService pwmFanService;
+  final DataRepository dataRepository;
 
   SystemOnOffCubit(this.heaterService, this.humidifierService,
-      this.heaterServicePid, this.pwmFanService)
+      this.heaterServicePid, this.pwmFanService, this.dataRepository)
       : super(SystemOnState());
 
   void toggleSystemState() {
@@ -23,6 +25,7 @@ class SystemOnOffCubit extends Cubit<SystemOnOffState> {
       humidifierService.humidifierSystemOnOff();
       heaterService.heaterSystemOnOff();
       pwmFanService.pwmFanSystemOnOff();
+      dataRepository.updateSystemOnOff(false);
       emit(SystemOffState());
     } else {
       debugPrint('In Cubit Turning system on');
@@ -30,6 +33,7 @@ class SystemOnOffCubit extends Cubit<SystemOnOffState> {
       humidifierService.humidifierSystemOnOff();
       heaterService.heaterSystemOnOff();
       pwmFanService.pwmFanSystemOnOff();
+      dataRepository.updateSystemOnOff(true);
       emit(SystemOnState());
     }
   }

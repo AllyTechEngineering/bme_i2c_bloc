@@ -8,12 +8,18 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 class HttpService {
   HttpServer? _server; // Store server instance for future control
 
+  // "currentTemperature": currentTemperature,
+  // "currentHumidity": currentHumidity,
+  // "currentPressure": currentPressure,
+  // "setpointHumidity": setpointHumidity,
+  // "setpointTemperature": setpointTemperature,
   final Map<String, dynamic> _variables = {
-    "temperatureSetPoint": 0.0,
-    "humiditySetPoint": 0.0,
+    "setpointTemperature": 0.0,
+    "setpointHumidity": 0.0,
     "currentTemperature": 0.0,
     "currentHumidity": 0.0,
-    "pressure": 0.0, // New sensor data field
+    "currentPressure": 0.0,
+    "fanSpeed": 0,
     "systemOnOff": false,
     "doughLevel": false,
   };
