@@ -71,7 +71,7 @@ class DataRepository {
     // Send to stream
     _controller.add(sensorData);
 
-    // debugPrint('In Data Repository sensorData: $sensorData');
+    debugPrint('In Data Repository sensorData: $sensorData');
   }
 
   void dispose() {

@@ -80,6 +80,13 @@ Copy and paste the following - if you changed the overlay and the pwmchip_ numbe
 ACTION=="add", SUBSYSTEM=="pwm", KERNEL=="pwmchip0", RUN+="/bin/sh -c 'echo 0 > /sys/class/pwm/pwmchip0/export'"
 ACTION=="add", SUBSYSTEM=="pwm", KERNEL=="pwmchip2", RUN+="/bin/sh -c 'echo 0 > /sys/class/pwm/pwmchip2/export'"
 ACTION=="add", SUBSYSTEM=="pwm", KERNEL=="pwmchip6", RUN+="/bin/sh -c 'echo 0 > /sys/class/pwm/pwmchip6/export'"
+ACTION=="add", SUBSYSTEM=="pwm", KERNEL=="pwmchip0", RUN+="/bin/sh -c 'echo 1 > /sys/class/pwm/pwmchip0/export'"
+ACTION=="add", SUBSYSTEM=="pwm", KERNEL=="pwmchip2", RUN+="/bin/sh -c 'echo 1 > /sys/class/pwm/pwmchip2/export'"
+ACTION=="add", SUBSYSTEM=="pwm", KERNEL=="pwmchip6", RUN+="/bin/sh -c 'echo 1 > /sys/class/pwm/pwmchip6/export'"
+ACTION=="add", SUBSYSTEM=="pwm", KERNEL=="pwmchip2", RUN+="/bin/sh -c 'echo 2 > /sys/class/pwm/pwmchip2/export'"
+ACTION=="add", SUBSYSTEM=="pwm", KERNEL=="pwmchip6", RUN+="/bin/sh -c 'echo 2 > /sys/class/pwm/pwmchip6/export'"
+ACTION=="add", SUBSYSTEM=="pwm", KERNEL=="pwmchip2", RUN+="/bin/sh -c 'echo 3 > /sys/class/pwm/pwmchip2/export'"
+ACTION=="add", SUBSYSTEM=="pwm", KERNEL=="pwmchip6", RUN+="/bin/sh -c 'echo 3 > /sys/class/pwm/pwmchip6/export'"
 ```
 
 After saving the file, reload the udev rules.
