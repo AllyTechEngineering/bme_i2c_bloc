@@ -27,6 +27,7 @@ class DataRepository {
 
   void updateData(Map<String, dynamic> updatedData) {
     _controller.add(updatedData);
+    debugPrint('In Data Repository updatedData: $updatedData');
   }
 
   void updateSetpointTemperature(double newSetpointTemperature) {
@@ -70,7 +71,7 @@ class DataRepository {
     // Send to stream
     _controller.add(sensorData);
 
-    debugPrint('In Data Repository sensorData: $sensorData');
+    // debugPrint('In Data Repository sensorData: $sensorData');
   }
 
   void dispose() {

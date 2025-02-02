@@ -13,7 +13,7 @@ class PwmFanService {
   void initializePwmFanService() {
     try {
       // pwm = PWM(0, 1);
-      // debugPrint('Initial PwmFan Info: ${pwm.getPWMinfo()}');
+      debugPrint('Initial PwmFan Info: ${pwm0.getPWMinfo()}');
     } catch (e) {
       debugPrint('Initial PwmFan Error: $e');
     }
@@ -22,7 +22,7 @@ class PwmFanService {
       pwm1.setPeriodNs(10000000);
       pwm2.setPeriodNs(10000000);
       pwm3.setPeriodNs(10000000);
-      // debugPrint('PwmFan period Info: ${pwm.getPeriodNs()}');
+      debugPrint('PwmFan period Info: ${pwm0.getPeriodNs()}');
     } catch (e) {
       debugPrint('PwmFan period Error: $e');
     }
@@ -31,7 +31,7 @@ class PwmFanService {
       pwm1.setDutyCycleNs(0);
       pwm2.setDutyCycleNs(0);
       pwm3.setDutyCycleNs(0);
-      // debugPrint('PwmFan Dutycycle Info: ${pwm.getDutyCycleNs()}');
+      debugPrint('PwmFan Dutycycle Info: ${pwm0.getDutyCycleNs()}');
     } catch (e) {
       debugPrint('PwmFan Dutycycle Error: $e');
     }
@@ -40,7 +40,7 @@ class PwmFanService {
       pwm1.enable();
       pwm2.enable();
       pwm3.enable();
-      // debugPrint('PwmFan Enable Info: ${pwm.getEnabled()}');
+      debugPrint('PwmFan Enable Info: ${pwm0.getEnabled()}');
     } catch (e) {
       debugPrint('PwmFan Enable Error: $e');
     }
@@ -64,9 +64,9 @@ class PwmFanService {
       pwm1.setDutyCycleNs(updateDutyCycle * 100000);
       pwm2.setDutyCycleNs(updateDutyCycle * 100000);
       pwm3.setDutyCycleNs(updateDutyCycle * 100000);
-      // debugPrint(
-      //     'In PwmFan updatePwmDutyCycle DutyCycleNs= ${pwm.getDutyCycleNs()}');
-      // debugPrint('In PwmFan updatePwmDutyCycle PWM Info: ${pwm.getPWMinfo()}');
+      debugPrint(
+          'In PwmFan updatePwmDutyCycle DutyCycleNs= ${pwm0.getDutyCycleNs()}');
+      debugPrint('In PwmFan updatePwmDutyCycle PWM Info: ${pwm0.getPWMinfo()}');
     }
   }
 

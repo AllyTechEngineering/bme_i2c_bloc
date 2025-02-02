@@ -28,17 +28,17 @@ class HttpService {
       DataRepository(); // Connect DataRepository
 
   HttpService() {
-    debugPrint("HttpService Constructor Called");
+    // debugPrint("HttpService Constructor Called");
     // 🔹 Listen for sensor data updates
     dataRepository.dataStream.listen((sensorData) {
-      debugPrint("Received Sensor Data: $sensorData");
+      // debugPrint("Received Sensor Data: $sensorData");
       sensorData.forEach((key, value) {
         if (_variables.containsKey(key)) {
           _variables[key] = value; // Update local variables
         }
       });
 
-      debugPrint("Updated Variables from Sensor: $_variables");
+      // debugPrint("Updated Variables from Sensor: $_variables");
     });
   }
 
@@ -49,15 +49,15 @@ class HttpService {
 
     // Start the HTTP server
     _server = await shelf_io.serve(handler, InternetAddress.anyIPv4, 8080);
-    debugPrint(
-        'Server running on ${_server?.address.address}:${_server?.port}');
+    // debugPrint(
+    //     'Server running on ${_server?.address.address}:${_server?.port}');
 
     // Advertise the service using Avahi
     advertiseMdnsService();
   }
 
   void advertiseMdnsService() {
-    debugPrint("Advertising service using Avahi...");
+    // debugPrint("Advertising service using Avahi...");
     Process.run(
       'avahi-publish-service',
       ['doughproofer', '_http._tcp', '8080'],

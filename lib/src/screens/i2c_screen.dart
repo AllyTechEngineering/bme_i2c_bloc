@@ -69,7 +69,7 @@ class I2CScreen extends StatelessWidget {
               child: Slider(
                 value: currentValue,
                 min: 0,
-                max: 100,
+                max: 50,
                 divisions: 100,
                 label: currentValue.round().toString(),
                 onChanged: (double value) {
