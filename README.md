@@ -71,6 +71,7 @@ dtoverlay=pwm-pi5
 ### Step Two: Create a udev rule
 *******************************************************************************************************************
 We need to create a new udev rule that will export the pwm channels at boot. Linux by default does not do this.
+Note: pwmchip6 has 4 channels but will not export pwm3.
 ```
 sudo nano /etc/udev/rules.d/99-pwm.rules
 ```
@@ -98,27 +99,28 @@ You will need to reboot.
 
 ### Step Three: Check the PWMs
 *******************************************************************************************************************
-These commands will check with pwm0 has been exported. If you do not see pwm0 then retrace you steps and try again.
+These commands will check with pwm0 has been exported. If you do not see this then retrace you steps and try again.
+Note: this is using the udev rules in this readme. For some reason pwmchip6 will not export pwm3.
 ```
 ls /sys/class/pwmchip0
 ```
 Response:
 ``
-device  export  npwm  power  pwm0  subsystem  uevent  unexport
+device  export  npwm  power  pwm0  pwm1  subsystem  uevent  unexport
 ``
 ```
 ls /sys/class/pwmchip2
 ```
 Response:
 ``
-device  export  npwm  power  pwm0  subsystem  uevent  unexport
+device  export  npwm  power  pwm0  pwm1  pwm2  pwm3  subsystem  uevent  unexport
 ``
 ```
 ls /sys/class/pwmchip6
 ```
 Response:
 ``
-device  export  npwm  power  pwm0  subsystem  uevent  unexport
+device  export  npwm  power  pwm0  pwm1  pwm2  pwm3  subsystem  uevent  unexport
 ``
 
 Other usefull command line instructions:
@@ -137,6 +139,9 @@ grep . /sys/class/pwm/pwmchip*/npwm
 - Response - 4 channels:
 ``
 /sys/class/pwm/pwmchip6/npwm:4
+``
+``
+- Response - 4 channels but only 3 are available (0,1 and 2)
 ``
 
 
