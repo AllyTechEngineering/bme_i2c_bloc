@@ -15,7 +15,7 @@ class DataRepository {
   static double setpointHumidity = 0;
   static double setpointTemperature = 0;
   static int fanSpeed = 0;
-  static bool systemOnOff = false;
+  static bool systemOnOff = true;
   static String systemStateString = 'off';
   static bool doughLevel = false;
   static String doughLevelString = 'Not Risen';

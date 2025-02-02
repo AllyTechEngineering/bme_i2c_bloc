@@ -25,7 +25,7 @@ class SystemOnOffCubit extends Cubit<SystemOnOffState> {
       humidifierService.humidifierSystemOnOff();
       heaterService.heaterSystemOnOff();
       pwmFanService.pwmFanSystemOnOff();
-      dataRepository.updateSystemOnOff(true);
+      dataRepository.updateSystemOnOff(false);
       emit(SystemOffState());
     } else {
       // debugPrint('In Cubit Turning system on');
@@ -33,7 +33,7 @@ class SystemOnOffCubit extends Cubit<SystemOnOffState> {
       humidifierService.humidifierSystemOnOff();
       heaterService.heaterSystemOnOff();
       pwmFanService.pwmFanSystemOnOff();
-      dataRepository.updateSystemOnOff(false);
+      dataRepository.updateSystemOnOff(true);
       emit(SystemOnState());
     }
   }
