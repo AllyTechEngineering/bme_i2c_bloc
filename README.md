@@ -288,4 +288,5 @@ device  export  npwm  power  pwm0  pwm1  subsystem  uevent  unexport
 ``
 ### Step Four: Run Flutter App with dart_periphery
 *******************************************************************************************************************
-On the Raspberry Pi Model 4B the only valid options are pwm(0,0) and pwm(0,1)
+On the Raspberry Pi Model 4B the only valid options are pwm(0,0) and pwm(0,1) I have not tested the other dtoverlays
+for the other pin assingment combinations.
