@@ -280,7 +280,7 @@ You will need to reboot.
 *******************************************************************************************************************
 This commands will check with pwm0 has been exported. If you do not see this then retrace you steps and try again.
 ```
-ls /sys/class/pwmchip0
+ls /sys/class/pwm/pwmchip0
 ```
 Response:
 ``
