@@ -100,7 +100,7 @@ You will need to reboot.
 ### Step Three: Check the PWMs
 *******************************************************************************************************************
 These commands will check with pwm0 has been exported. If you do not see this then retrace you steps and try again.
-Note: this is using the udev rules in this readme. For some reason pwmchip6 will not export pwm3.
+Note: this is using the udev rules in this readme.
 ```
 ls /sys/class/pwmchip0
 ```
@@ -158,8 +158,7 @@ cat /sys/class/pwm/pwmchip6/pwm0/enable
 If the response is 0, the pwm has been exported but not enabled.
 If the response is 1, the pwm has been enabled.
 
-### pinctrl - Does Not Show The Correct Information
-pinctrl shows the correct alt function, GPIO Pin and pwm channel number but the pwmchip number is wrong.<br/>
+### pinctrl - On the Model 5 pwmchip2 is pwmchip0 on the RP1 IC
 12: a0    pd | lo // GPIO12 = PWM0_CHAN0<br/>
 13: a0    pd | lo // GPIO13 = PWM0_CHAN1<br/>
 18: a3    pd | lo // GPIO18 = PWM0_CHAN2<br/>
@@ -251,8 +250,39 @@ pwm0 = PWM(2, 0);<br/>
 pwm1 = PWM(2, 1);<br/>
 pwm2 = PWM(2, 2);<br/>
 pwm3 = PWM(2, 3);<br/>
+# Raspberry pi Model 4B PWM Solution
+## Step One: Updated config.txt
+*******************************************************************************************************************
+- Use this dtoverlay in config.txt
+```
+dtoverlay=pwm-2chan,pin=12,func=4,pin2=13,func2=4
+```
+## Step Two: Updated the udev rule
+*******************************************************************************************************************
+We need to update the udev rule so that it will export the pwm channels at boot. Linux by default does not do this.
+```
+sudo nano /etc/udev/rules.d/99-pwm.rules
+```
+Copy and paste the following:
 
+```
+SUBSYSTEM=="pwm", GROUP="gpio", MODE="0660"
+ACTION=="add", SUBSYSTEM=="pwm", KERNEL=="pwmchip0", RUN+="/bin/sh -c 'echo 0 > /sys/class/pwm/pwmchip0/export'"
+ACTION=="add", SUBSYSTEM=="pwm", KERNEL=="pwmchip0", RUN+="/bin/sh -c 'echo 1 > /sys/class/pwm/pwmchip0/export'"
+```
 
-
-
-
+After saving the file, reload the udev rules.
+```
+sudo udevadm control --reload-rules && sudo udevadm trigger
+```
+You will need to reboot.
+### Step Three: Check the PWMs
+*******************************************************************************************************************
+This commands will check with pwm0 has been exported. If you do not see this then retrace you steps and try again.
+```
+ls /sys/class/pwmchip0
+```
+Response:
+``
+device  export  npwm  power  pwm0  pwm1  subsystem  uevent  unexport
+``
