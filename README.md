@@ -20,8 +20,10 @@ closed loop control system with touchscreen.
 This link has all of the details for creating the dtoverlay that I find works for pwmchip0, pwm0, pwmchip2, pwm0 and pwmchip6 pwm0 (channel 0).
 https://gist.github.com/Gadgetoid/b92ad3db06ff8c264eef2abf0e09d569
 
-In a new terminal window:
-Use sudo nano and copy this code and save as pwm-pi5-overlay.dts
+Move to a folder of your choice, I used Desktop, and in a new terminal window copy and paste this.
+```
+sudo nano pwm-pi5-overlay.dts
+```
 
 ```
 /dts-v1/;
