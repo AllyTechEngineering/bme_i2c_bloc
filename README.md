@@ -251,13 +251,13 @@ pwm1 = PWM(2, 1);<br/>
 pwm2 = PWM(2, 2);<br/>
 pwm3 = PWM(2, 3);<br/>
 # Raspberry pi Model 4B PWM Solution
-### Step One: Updated config.txt
+### Step One: Update config.txt
 *******************************************************************************************************************
 - Use this dtoverlay in config.txt
 ```
 dtoverlay=pwm-2chan,pin=12,func=4,pin2=13,func2=4
 ```
-### Step Two: Updated the udev rule
+### Step Two: Update the udev rule
 *******************************************************************************************************************
 We need to update the udev rule so that it will export the pwm channels at boot. Linux by default does not do this.
 ```
