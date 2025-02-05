@@ -24,7 +24,7 @@ Move to a folder of your choice, I used Desktop, and in a new terminal window co
 ```
 sudo nano pwm-pi5-overlay.dts
 ```
-
+Then copy and paste this code in the file.
 ```
 /dts-v1/;
 /plugin/;
@@ -52,6 +52,8 @@ sudo nano pwm-pi5-overlay.dts
 	};
 };
 ```
+Control X to start the save file process in nano.
+Answer Y and enter to save the file.
 
 To compile (copy this at the command line): 
 ```
